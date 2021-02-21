@@ -1,13 +1,12 @@
 class TrieNode:
-    def __init__(self, val, is_word):
-        self.is_word = is_word
-        self.val = val
+    def __init__(self):
+        self.is_word = False
         self.children = {}
 
 
 class Trie:
     def __init__(self):
-        self.root = TrieNode("", False)
+        self.root = TrieNode()
 
     def add(self, word):
         i = 0
@@ -15,7 +14,7 @@ class Trie:
 
         while i < len(word):
             if word[i] not in curr.children:
-                curr.children[word[i]] = TrieNode(word[i], False)
+                curr.children[word[i]] = TrieNode()
 
             curr = curr.children[word[i]]
             i += 1
@@ -25,15 +24,12 @@ class Trie:
 
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
-        def dfs(res, curr, board, R, C, r, c, node, visited):
+        def dfs(res, curr, board, R, C, r, c, node):
             if node.is_word:
                 res.append("".join(curr))
                 node.is_word = False
 
             if r < 0 or r >= R or c < 0 or c >= C:
-                return
-
-            if (r, c) in visited:
                 return
 
             ch = board[r][c]
@@ -42,14 +38,14 @@ class Solution:
             if not node:
                 return
 
-            visited.add((r, c))
             curr.append(ch)
-            dfs(res, curr, board, R, C, r + 1, c, node, visited)
-            dfs(res, curr, board, R, C, r, c + 1, node, visited)
-            dfs(res, curr, board, R, C, r - 1, c, node, visited)
-            dfs(res, curr, board, R, C, r, c - 1, node, visited)
+            board[r][c] = "#"
+            dfs(res, curr, board, R, C, r + 1, c, node)
+            dfs(res, curr, board, R, C, r, c + 1, node)
+            dfs(res, curr, board, R, C, r - 1, c, node)
+            dfs(res, curr, board, R, C, r, c - 1, node)
+            board[r][c] = ch
             curr.pop()
-            visited.remove((r, c))
 
         trie = Trie()
         res = []
@@ -60,6 +56,6 @@ class Solution:
 
         for i in range(R):
             for j in range(C):
-                dfs(res, [], board, R, C, i, j, trie.root, set())
+                dfs(res, [], board, R, C, i, j, trie.root)
 
         return res
