@@ -1,3 +1,6 @@
+from typing import List
+
+
 class Solution:
     def generateAbbreviations(self, word: str) -> List[str]:
         def dfs(res, curr, word):
