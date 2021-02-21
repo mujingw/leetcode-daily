@@ -9,15 +9,13 @@ class Trie:
         self.root = TrieNode()
 
     def add(self, word):
-        i = 0
         curr = self.root
 
-        while i < len(word):
-            if word[i] not in curr.children:
-                curr.children[word[i]] = TrieNode()
+        for ch in word:
+            if ch not in curr.children:
+                curr.children[ch] = TrieNode()
 
-            curr = curr.children[word[i]]
-            i += 1
+            curr = curr.children[ch]
 
         curr.is_word = True
 
