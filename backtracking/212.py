@@ -9,20 +9,7 @@ class Trie:
     def __init__(self):
         self.root = TrieNode("", False)
 
-    def exists(self, word):
-        curr = self.root
-        i = 0
-
-        while curr and i < len(word) and word[i] in curr.children:
-            curr = curr.children[word[i]]
-            i += 1
-
-        return curr.is_word and i == len(word)
-
     def add(self, word):
-        if self.exists(word):
-            return
-
         i = 0
         curr = self.root
 
@@ -68,7 +55,7 @@ class Solution:
         res = []
         R, C = len(board), len(board[0])
 
-        for word in words:
+        for word in set(words):
             trie.add(word)
 
         for i in range(R):
