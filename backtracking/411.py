@@ -1,29 +1,36 @@
 from typing import List
+from collections import deque
 
 
 class Solution:
     def valid_word_abbr(self, word, abbr):
-        i, j = 0, 0
-        m, n = len(word), len(abbr)
+        q1 = deque(list(word))
+        q2 = deque(abbr)
 
-        while i < m and j < n:
-            if word[i] == abbr[j]:
-                i += 1
-                j += 1
-            elif abbr[j] == "0":
-                return False
-            elif abbr[j].isnumeric():
-                k = j
+        while q1 and q2:
+            c1, c2 = q1.popleft(), q2.popleft()
 
-                while k < n and abbr[k].isnumeric():
-                    k += 1
+            if c1 == c2:
+                continue
 
-                i += int("".join(abbr[j:k]))
-                j = k
+            elif c2.isdigit():
+                count = int(c2)
+
+                if count == 0:
+                    return False
+
+                while q2 and q2[0].isdigit():
+                    count = (count * 10 + int(q2.popleft()))
+
+                for i in range(count - 1):
+                    if q1:
+                        q1.popleft()
+                    else:
+                        return False
             else:
                 return False
 
-        return i == m and j == n
+        return not q1 and not q2
 
     def get_len(self, abbr):
         count = 0
@@ -64,7 +71,7 @@ class Solution:
         return res
 
     def minAbbreviation(self, target: str, dictionary: List[str]) -> str:
-        d = [word for word in dictionary if len(word) == len(target)]
+        d = [word for word in set(dictionary) if len(word) == len(target)]
         all_abbrs = sorted(self.gen_abbrs(target, d), key=lambda x: self.get_len(x))
 
         return "".join(all_abbrs[0])
