@@ -31,26 +31,21 @@ class WordDictionary:
         Returns if the word is in the data structure.
         A word could contain the dot character '.' to represent any one letter.
         """
-        curr = self.root
-        res = [False]
-        self.dfs(res, curr, word)
+        return self.dfs(self.root, word)
 
-        return res[0]
-
-    def dfs(self, res, curr, word):
+    def dfs(self, curr, word):
         if word == "":
-            if curr.is_word:
-                res[0] = True
-            return
+            return curr.is_word
 
         ch = word[0]
 
         if ch == ".":
-            for next_node in curr.children.values():
-                self.dfs(res, next_node, word[1:])
+            return any(self.dfs(nx_ch, word[1:]) for nx_ch in curr.children.values())
         else:
             if ch in curr.children:
-                self.dfs(res, curr.children[ch], word[1:])
+                return self.dfs(curr.children[ch], word[1:])
+            else:
+                return False
 
 # Your WordDictionary object will be instantiated and called as such:
 # obj = WordDictionary()
