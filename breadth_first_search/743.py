@@ -16,12 +16,10 @@ class Solution:
 
         while h:
             cost, curr = heappop(h)
-            seen[curr] = min(cost, seen[curr])
 
             for nx, weight in g[curr]:
-                if nx in seen:
-                    if cost + weight >= seen[nx]:
-                        continue
+                if nx in seen and cost + weight >= seen[nx]:
+                    continue
 
                 seen[nx] = cost + weight
                 heappush(h, (cost + weight, nx))
