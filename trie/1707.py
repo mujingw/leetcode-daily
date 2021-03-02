@@ -1,6 +1,3 @@
-from typing import List
-
-
 class Node:
     def __init__(self):
         self.children = {}
@@ -10,6 +7,9 @@ class Node:
 class Trie:
     def __init__(self):
         self.root = Node()
+
+    def empty(self):
+        return len(self.root.children) == 0
 
     def add(self, s, num):
         curr = self.root
@@ -52,7 +52,7 @@ class Solution:
                 trie.add(self.num_to_bin(nums[p]), nums[p])
                 p += 1
 
-            if len(trie.root.children) > 0:
+            if not trie.empty():
                 res[i] = trie.find_max_xor(self.num_to_bin(val), val)
 
         return res
