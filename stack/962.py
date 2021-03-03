@@ -1,19 +1,18 @@
-from collections import defaultdict
 from typing import List
 
 
 class Solution:
     def maxWidthRamp(self, A: List[int]) -> int:
+        desc = []
         res = 0
-        num_to_idx = defaultdict(list)
-        sorted_arr = sorted(A)
-        min_idx_so_far = float("inf")
 
-        for i, v in enumerate(A):
-            num_to_idx[v].append(i)
+        for i, num in enumerate(A):
+            if not desc or A[desc[-1]] > num:
+                desc.append(i)
 
-        for i in range(len(A) - 1):
-            min_idx_so_far = min(min_idx_so_far, num_to_idx[sorted_arr[i]][0])
-            res = max(res, num_to_idx[sorted_arr[i + 1]][-1] - min_idx_so_far)
+        for r in range(len(A) - 1, -1, -1):
+            while desc and A[r] >= A[desc[-1]]:
+                res = max(res, r - desc[-1])
+                desc.pop()
 
         return res
