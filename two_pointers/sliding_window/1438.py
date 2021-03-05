@@ -17,7 +17,7 @@ class Solution:
             else:
                 sd[new_val] += 1
 
-            while abs(sd.keys()[0] - sd.keys()[-1]) > limit:
+            while abs(sd.peekitem(0)[0] - sd.peekitem(-1)[0]) > limit:
                 rm_val = nums[l]
                 l += 1
                 sd[rm_val] -= 1
