@@ -1,16 +1,48 @@
 from typing import List
 
 
+class Node:
+    def __init__(self, depth=0):
+        self.children = {}
+        self.depth = depth
+
+
+class Trie:
+    def __init__(self):
+        self.root = Node()
+
+    def add(self, word):
+        curr = self.root
+
+        for i, ch in enumerate(word):
+            if ch not in curr.children:
+                curr.children[ch] = Node(i + 1)
+
+            curr = curr.children[ch]
+
+    def size(self):
+        return self.dfs(self.root)
+
+    def dfs(self, root):
+        if not root:
+            return 0
+
+        if len(root.children) == 0:
+            return root.depth + 1
+
+        count = 0
+
+        for ch in root.children:
+            count += self.dfs(root.children[ch])
+
+        return count
+
+
 class Solution:
     def minimumLengthEncoding(self, words: List[str]) -> int:
-        flags = [True] * len(words)
-        N = len(words)
-        words.sort(key=lambda x: len(x))
+        trie = Trie()
 
-        for i in range(N):
-            for j in range(i + 1, N):
-                if words[i] == words[j][-len(words[i]):]:
-                    flags[i] = False
-                    break
+        for word in words:
+            trie.add(word[::-1])
 
-        return sum(len(words[i]) + 1 for i in range(N) if flags[i])
+        return trie.size()
