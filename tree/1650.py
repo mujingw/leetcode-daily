@@ -1,17 +1,15 @@
 class Solution:
     def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
-        parents = set([])
-        curr = p
+        cp, cq = p, q
 
-        while curr:
-            parents.add(curr)
-            curr = curr.parent
+        while cp != cq:
+            cp = cp.parent
+            cq = cq.parent
 
-        curr = q
+            if cp is None:
+                cp = q
 
-        while curr:
-            if curr in parents:
-                return curr
-            else:
-                parents.add(curr)
-                curr = curr.parent
+            if cq is None:
+                cq = p
+
+        return cp
