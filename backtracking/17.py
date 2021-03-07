@@ -1,28 +1,23 @@
-class Solution(object):
-    def letterCombinations(self, digits):
-        """
-        :type digits: str
-        :rtype: List[str]
-        """
+from typing import List
 
-        def dfs(res, curr, digits, pos, phone):
-            if pos == len(digits):
-                res.append(curr)
 
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        def dfs(res, curr, pos, digits, phone):
+            if len(curr) == len(digits):
+                res.append("".join(curr))
                 return
 
-            for letter in phone[digits[pos]]:
-                dfs(res, curr + letter, digits, pos + 1, phone)
-
-        phone = {"2": "abc", "3": "def", \
-                 "4": "ghi", "5": "jkl", "6": "mno", \
-                 "7": "pqrs", "8": "tuv", "9": "wxyz"}
-
-        res = []
+            for ch in phone[digits[pos]]:
+                dfs(res, curr + [ch], pos + 1, digits, phone)
 
         if not digits:
-            return res
+            return []
 
-        dfs(res, "", digits, 0, phone)
+        phone = {"2": "abc", "3": "def",
+                 "4": "ghi", "5": "jkl", "6": "mno",
+                 "7": "pqrs", "8": "tuv", "9": "wxyz"}
+        res = []
+        dfs(res, [], 0, digits, phone)
 
         return res
