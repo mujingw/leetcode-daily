@@ -16,7 +16,6 @@ class Solution:
                 g[emp.id].add(ee)
 
         q = collections.deque([eid])
-        res = 0
 
         while q:
             curr = q.popleft()
