@@ -1,19 +1,14 @@
-from heapq import heappush, heapreplace
+from collections import defaultdict
+from itertools import accumulate
 from typing import List
 
 
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        intervals.sort()
-        h = []
+        d = defaultdict(int)
 
         for s, e in intervals:
-            if not h:
-                heappush(h, e)
-            else:
-                if s < h[0]:
-                    heappush(h, e)
-                else:
-                    heapreplace(h, e)
+            d[s] += 1
+            d[e] -= 1
 
-        return len(h)
+        return max(accumulate(d[t] for t in sorted(d.keys())))
