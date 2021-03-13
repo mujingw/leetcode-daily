@@ -4,17 +4,17 @@ from typing import List
 
 class Solution:
     def intervalIntersection(self, first: List[List[int]], second: List[List[int]]) -> List[List[int]]:
-        def add_to_d(d, intervals):
-            for s, e in intervals:
-                d[s] += 1
-                d[e] -= 1
+        if not first and not second:
+            return []
 
         d = defaultdict(int)
         total = 0
         curr_start = None
         res = []
-        add_to_d(d, first)
-        add_to_d(d, second)
+
+        for s, e in first + second:
+            d[s] += 1
+            d[e] -= 1
 
         for p in sorted(d.keys()):
             total += d[p]
