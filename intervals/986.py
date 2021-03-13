@@ -4,7 +4,7 @@ from typing import List
 
 class Solution:
     def intervalIntersection(self, first: List[List[int]], second: List[List[int]]) -> List[List[int]]:
-        if not first and not second:
+        if not first or not second:
             return []
 
         d = defaultdict(int)
