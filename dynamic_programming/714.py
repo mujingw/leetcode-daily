@@ -1,24 +1,18 @@
-from functools import lru_cache
 from typing import List
 
 
 class Solution:
     def maxProfit(self, prices: List[int], fee: int) -> int:
-        @lru_cache(None)
-        def helper(day, has_stock):
-            if day == 0:
-                if has_stock:
-                    return - prices[0] - fee
-                else:
-                    return 0
-
-            if has_stock:
-                res = max(helper(day - 1, False) - prices[day] - fee, helper(day - 1, True))
-            else:
-                res = max(helper(day - 1, True) + prices[day], helper(day - 1, False))
-
-            return res
-
         N = len(prices)
+        dp = [[float('-inf') for _ in range(2)] for _ in range(N)]
+        dp[0][0] = 0
+        dp[0][1] = -prices[0] - fee
 
-        return max(helper(N - 1, False), helper(N - 1, True))
+        for day in range(1, N):
+            for hold_stock in (0, 1):
+                if hold_stock == 0:
+                    dp[day][hold_stock] = max(dp[day - 1][0], dp[day - 1][1] + prices[day])
+                else:
+                    dp[day][hold_stock] = max(dp[day - 1][1], dp[day - 1][0] - prices[day] - fee)
+
+        return max(dp[N - 1])
