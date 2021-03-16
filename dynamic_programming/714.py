@@ -12,8 +12,6 @@ class Solution:
                 else:
                     return 0
 
-            res = 0
-
             if has_stock:
                 res = max(helper(day - 1, False) - prices[day] - fee, helper(day - 1, True))
             else:
