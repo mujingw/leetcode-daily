@@ -14,10 +14,8 @@ class Solution:
             for i in range(1, len(s)):
                 right = s[i:]
 
-                if right not in w_dict:
-                    continue
-
-                res.extend([left + " " + right for left in helper(s[0:i])])
+                if right in w_dict:
+                    res.extend([left + " " + right for left in helper(s[0:i])])
 
             return res
 
