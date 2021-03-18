@@ -27,8 +27,8 @@ class Solution:
             return False
 
         DIR = [(0, 1), (0, -1), (-1, 0), (1, 0)]
-        R, C = len(grid), len(grid[0])
-        l, r = 0, 50 * 50
+        N, R, C = 50, len(grid), len(grid[0])
+        l, r = 0, N * N
 
         while l < r:
             mid = (l + r) // 2
