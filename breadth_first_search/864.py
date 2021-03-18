@@ -33,7 +33,6 @@ class Solution:
 
         DIR = ((0, 1), (0, -1), (1, 0), (-1, 0))
         R, C = len(grid), len(grid[0])
-        res = float('inf')
         KEYS = "abcdef"
         LOCKS = "ABCDEF"
         WALL = "#"
