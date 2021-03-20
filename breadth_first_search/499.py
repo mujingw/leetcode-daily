@@ -17,9 +17,6 @@ class Solution:
             for dx, dy, d in DIR:
                 nx, ny, new_path, local_dist = cx, cy, path + d, 0
 
-                if path and path[-1] == d:
-                    continue
-
                 while 0 <= nx + dx < R and 0 <= ny + dy < C and maze[nx + dx][ny + dy] != 1:
                     nx += dx
                     ny += dy
