@@ -22,20 +22,20 @@ class Solution:
 
         total_area = 0
         MOD = 10 ** 9 + 7
-        y_vals = defaultdict(collections.deque)
+        y2x_itvls = defaultdict(collections.deque)
 
         for x1, y1, x2, y2 in rectangles:
             if y1 != y2:
-                bisect.insort(y_vals[y1], (1, x1, x2))
-                bisect.insort(y_vals[y2], (-1, x1, x2))
+                bisect.insort(y2x_itvls[y1], (1, x1, x2))
+                bisect.insort(y2x_itvls[y2], (-1, x1, x2))
 
-        sorted_yvals = sorted(y_vals.keys())
+        sorted_yvals = sorted(y2x_itvls.keys())
         prev_y = sorted_yvals[0]
         active_itvls = []
 
         for y in sorted_yvals:
-            while y_vals[y]:
-                typ, xs, xe = y_vals[y].popleft()
+            while y2x_itvls[y]:
+                typ, xs, xe = y2x_itvls[y].popleft()
                 height = y - prev_y
                 total_area += (total_width_after_merge(active_itvls) * height)
 
