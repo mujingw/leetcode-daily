@@ -16,7 +16,6 @@ class Solution:
             return 0
 
         res = min(rb, N - lb - 1)
-
         l, r = 0, rb
 
         while l <= lb and r <= N - 1:
