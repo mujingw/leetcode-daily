@@ -12,13 +12,10 @@ class Solution:
         while rb > 0 and arr[rb] >= arr[rb - 1]:
             rb -= 1
 
-        if lb >= rb:
-            return 0
-
         res = min(rb, N - lb - 1)
         l, r = 0, rb
 
-        while l <= lb and r <= N - 1:
+        while l <= lb and r < N and l < r:
             if arr[l] <= arr[r]:
                 res = min(res, r - l - 1)
                 l += 1
