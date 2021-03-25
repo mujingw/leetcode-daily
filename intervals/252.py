@@ -1,18 +1,14 @@
+from collections import defaultdict
+from itertools import accumulate
 from typing import List
 
 
 class Solution:
     def canAttendMeetings(self, intervals: List[List[int]]) -> bool:
-        if not intervals:
-            return True
+        d = defaultdict(int)
 
-        intervals.sort()
-        s, e = intervals[0]
+        for s, e in intervals:
+            d[s] += 1
+            d[e] -= 1
 
-        for cs, ce in intervals[1:]:
-            if cs < e:
-                return False
-            else:
-                s, e = cs, ce
-
-        return True
+        return all(x <= 1 for x in accumulate(d[t] for t in sorted(d.keys())))
