@@ -4,14 +4,9 @@ from typing import List
 class Solution:
     def splitArray(self, nums: List[int], m: int) -> int:
         def ok(sum_limit, m):
-            curr_total = 0
-            chunks = 1
-            p = 0
+            curr_total, chunks, p = 0, 1, 0
 
             while p < N:
-                if nums[p] > sum_limit:
-                    return False
-
                 if curr_total + nums[p] <= sum_limit:
                     curr_total += nums[p]
                     p += 1
@@ -21,8 +16,7 @@ class Solution:
 
             return chunks <= m
 
-        N = len(nums)
-        l, r = 0, sum(nums) + 1
+        N, l, r = len(nums), max(nums), sum(nums) + 1
 
         while l < r:
             mid = (l + r) // 2
