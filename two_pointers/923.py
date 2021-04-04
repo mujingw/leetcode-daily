@@ -1,15 +1,10 @@
 import collections
+from math import comb
 from typing import List
 
 
 class Solution:
     def threeSumMulti(self, arr: List[int], target: int) -> int:
-        def n_choose_2(n):
-            return n * (n - 1) // 2
-
-        def n_choose_3(n):
-            return n * (n - 1) * (n - 2) // 6
-
         counter = collections.Counter(arr)
         arr.sort()
         MOD, N, res = 10 ** 9 + 7, len(arr), 0
@@ -26,11 +21,11 @@ class Solution:
 
                 if s == target:
                     if a == b == c:
-                        res += n_choose_3(counter[a])
+                        res += comb(counter[a], 3)
                     elif a == b:
-                        res += (n_choose_2(counter[a]) * counter[c])
+                        res += (comb(counter[a], 2) * counter[c])
                     elif b == c:
-                        res += (n_choose_2(counter[b]) * counter[a])
+                        res += (comb(counter[b], 2) * counter[a])
                     else:
                         res += (counter[a] * counter[b] * counter[c])
 
