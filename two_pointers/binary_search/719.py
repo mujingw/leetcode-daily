@@ -3,14 +3,14 @@ from typing import List
 
 class Solution:
     def smallestDistancePair(self, nums: List[int], k: int) -> int:
-        def ok(dist):
+        def ok(max_dist_allowed):
             res, l, r = 0, 0, 0
 
             while r < N:
                 r_val = sn[r]
                 r += 1
 
-                while r_val - sn[l] > dist:
+                while r_val - sn[l] > max_dist_allowed:
                     l += 1
 
                 res += (r - l - 1)
@@ -19,8 +19,7 @@ class Solution:
 
         sn = sorted(nums)
         N = len(nums)
-        l = 0
-        r = sn[-1] - sn[0]
+        l, r = 0, sn[-1] - sn[0]
 
         while l < r:
             mid = (l + r) // 2
