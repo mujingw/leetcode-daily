@@ -1,7 +1,7 @@
-# Definition for a Node.
 import collections
 
 
+# Definition for a Node.
 class Node(object):
     def __init__(self, val=None, children=None):
         self.val = val
