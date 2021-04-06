@@ -16,12 +16,17 @@ class Solution:
                 return None
 
             root = TreeNode(preorder[pl])
-            idx = inorder[il:ir].index(root.val)
-            root.left = construct(preorder, inorder, pl + 1, pl + 1 + idx, il, il + idx)
-            root.right = construct(preorder, inorder, pl + 1 + idx, pr, il + idx + 1, ir)
+            idx = lookup[root.val]
+            num_left_nodes = idx - il
+            root.left = construct(preorder, inorder, pl + 1, pl + 1 + num_left_nodes, il, idx)
+            root.right = construct(preorder, inorder, pl + 1 + num_left_nodes, pr, idx + 1, ir)
 
             return root
 
         N = len(preorder)
+        lookup = {}
+
+        for i, v in enumerate(inorder):
+            lookup[v] = i
 
         return construct(preorder, inorder, 0, N, 0, N)
