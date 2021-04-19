@@ -3,27 +3,28 @@ from typing import List
 
 class Solution:
     def letterCasePermutation(self, S: str) -> List[str]:
-        def dfs(res, curr, S, start):
+        def dfs(res, curr, pos):
             if len(curr) == len(S):
                 res.append("".join(curr))
 
                 return
 
-            for i in range(start, len(S)):
-                curr.append(S[i])
-                dfs(res, curr, S, i + 1)
+            ch = S[pos]
+
+            curr.append(ch)
+            dfs(res, curr, pos + 1)
+            curr.pop()
+
+            if ch.isalpha():
+                if ch.islower():
+                    curr.append(ch.upper())
+                else:
+                    curr.append(ch.lower())
+
+                dfs(res, curr, pos + 1)
                 curr.pop()
 
-                if S[i].isalpha():
-                    if S[i].islower():
-                        curr.append(S[i].upper())
-                    else:
-                        curr.append(S[i].lower())
-
-                    dfs(res, curr, S, i + 1)
-                    curr.pop()
-
         res = []
-        dfs(res, [], S, 0)
+        dfs(res, [], 0)
 
         return res
