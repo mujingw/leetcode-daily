@@ -47,13 +47,8 @@ class Solution:
 
         for r in range(R):
             for c in range(C):
-                if grid[r][c] == '0':
-                    continue
-
-                p = uf.find(self.convert(r, c, R, C))
-
-                if p not in parents:
-                    parents.add(p)
+                if grid[r][c] == '1':
+                    parents.add(uf.find(self.convert(r, c, R, C)))
 
         return len(parents)
 
