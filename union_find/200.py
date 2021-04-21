@@ -4,7 +4,7 @@ from typing import List
 class UF:
     def __init__(self, size):
         self.rank = [0] * size
-        self.parent = [-1 for _ in range(size)]
+        self.parent = [i for i in range(size)]
 
     def union(self, u, v):
         if u != v:
@@ -36,18 +36,11 @@ class Solution:
                 if grid[i][j] == '1':
                     idx = self.convert(i, j, R, C)
 
-                    if uf.parent[idx] == -1:
-                        uf.parent[idx] = idx
-
                     for dx, dy in DIR:
                         nx, ny = i + dx, j + dy
 
                         if self.is_valid(grid, nx, ny, R, C):
                             neighbor_idx = self.convert(nx, ny, R, C)
-
-                            if uf.parent[neighbor_idx] == -1:
-                                uf.parent[neighbor_idx] = idx
-
                             uf.union(idx, neighbor_idx)
 
         parents = set()
