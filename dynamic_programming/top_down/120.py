@@ -11,14 +11,11 @@ class Solution:
             if row == N:
                 return 0
 
-            width = len(triangle[row])
+            path_sum = triangle[row][col]
 
-            if col >= width:
-                return 0
+            if col < len(triangle[row]):
+                path_sum += min(dfs(row + 1, col), dfs(row + 1, col + 1))
 
-            left = dfs(row + 1, col)
-            right = dfs(row + 1, col + 1)
-
-            return min(left + triangle[row][col], right + triangle[row][col])
+            return path_sum
 
         return dfs(0, 0)
