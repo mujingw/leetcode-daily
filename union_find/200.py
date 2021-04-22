@@ -7,16 +7,15 @@ class UF:
         self.parent = [i for i in range(size)]
 
     def union(self, u, v):
-        if u != v:
-            ru, rv = self.find(u), self.find(v)
+        ru, rv = self.find(u), self.find(v)
 
-            if self.rank[ru] < self.rank[rv]:
-                self.parent[rv] = ru
-            elif self.rank[rv] < self.rank[ru]:
-                self.parent[ru] = rv
-            else:
-                self.parent[rv] = ru
-                self.rank[ru] += 1
+        if self.rank[ru] < self.rank[rv]:
+            self.parent[ru] = rv
+        elif self.rank[rv] < self.rank[ru]:
+            self.parent[rv] = ru
+        else:
+            self.parent[rv] = ru
+            self.rank[ru] += 1
 
     def find(self, x):
         if self.parent[x] != x:
