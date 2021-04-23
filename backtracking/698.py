@@ -24,7 +24,7 @@ class Solution:
             last_failure_num = -1
 
             for i in range(pos, N):
-                if used[i] or nums[i] == last_failure_num:
+                if used[i] or nums[i] == last_failure_num or nums[i] > target:
                     continue
 
                 used[i] = True
