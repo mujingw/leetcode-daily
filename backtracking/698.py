@@ -6,7 +6,7 @@ class Solution:
         N = len(nums)
         used = [False] * N
         total = sum(nums)
-        nums.sort()
+        nums.sort(reverse=True)
 
         if total % k != 0:
             return False
