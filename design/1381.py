@@ -24,4 +24,4 @@ class CustomStack:
 # obj = CustomStack(maxSize)
 # obj.push(x)
 # param_2 = obj.pop()
-# obj.increment(k,val)
+# obj.increment(k, val)
