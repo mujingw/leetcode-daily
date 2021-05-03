@@ -10,7 +10,7 @@ class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
         def dfs(res, node):
             if not node:
-                return float('-inf')
+                return 0
 
             left = dfs(res, node.left)
             right = dfs(res, node.right)
