@@ -1,10 +1,8 @@
 from collections import deque, defaultdict
-
-
-# Definition for a binary tree node.
 from typing import List
 
 
+# Definition for a binary tree node.
 class TreeNode:
     def __init__(self, x):
         self.val = x
