@@ -12,7 +12,7 @@ class Solution:
 
             for i in range(start, 10):
                 if t - i < 0:
-                    continue
+                    break
 
                 curr.append(i)
                 backtrack(res, curr, i + 1, t - i)
