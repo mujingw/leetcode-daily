@@ -26,10 +26,9 @@ class Solution:
         res = []
 
         for i, num in enumerate(nums):
-            if i < k - 1:
-                window.push(num)
-            else:
-                window.push(num)
+            window.push(num)
+
+            if i >= k - 1:
                 res.append(window.mx())
                 window.pop(nums[i - k + 1])
 
