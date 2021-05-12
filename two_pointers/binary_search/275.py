@@ -11,9 +11,7 @@ class Solution:
             citations = arr[mid]
             papers = N - mid
 
-            if papers == citations:
-                return papers
-            elif papers < citations:
+            if papers <= citations:
                 r = mid
             else:
                 l = mid + 1
