@@ -1,51 +1,32 @@
-from collections import defaultdict
 from typing import List
 
 
 class Solution:
     def solveNQueens(self, n: int) -> List[List[str]]:
-        def can_place_q(x, y):
-            if cols[y] or rows[x] or diag[(1, x + y)] or diag[(0, x - y)]:
-                return False
+        def solve(queens, xy_sum, xy_diff):
+            curr_row = len(queens)
 
-            return True
-
-        def add_queen(board, x, y):
-            board[x][y] = "Q"
-            cols[y] = True
-            rows[x] = True
-            diag[(0, x - y)] = True
-            diag[(1, x + y)] = True
-
-        def remove_queen(board, x, y):
-            diag[(0, x - y)] = False
-            diag[(1, x + y)] = False
-            cols[y] = False
-            rows[x] = False
-            board[x][y] = "."
-
-        def solve(pos, board, q):
-            if pos == EOB:
-                if q == N:
-                    configs.append([row[:] for row in board])
+            if curr_row == n:
+                res.append(queens[:])
 
                 return
 
-            x, y = pos // N, pos % N
+            for curr_col in range(n):
+                curr_diff = curr_row - curr_col
+                curr_sum = curr_row + curr_col
 
-            if board[x][y] == "." and can_place_q(x, y):
-                add_queen(board, x, y)
-                solve(pos + 1, board, q + 1)
-                remove_queen(board, x, y)
+                if curr_col not in queens and \
+                        curr_diff not in xy_diff and \
+                        curr_sum not in xy_sum:
+                    queens.append(curr_col)
+                    xy_diff.append(curr_diff)
+                    xy_sum.append(curr_sum)
+                    solve(queens, xy_sum, xy_diff)
+                    xy_sum.pop()
+                    xy_diff.pop()
+                    queens.pop()
 
-            solve(pos + 1, board, q)
+        res = []
+        solve([], [], [])
 
-        EOB, N = n * n, n
-        board = [["." for _ in range(N)] for _ in range(N)]
-        configs = []
-        cols = [False] * N
-        rows = [False] * N
-        diag = defaultdict(bool)
-        solve(0, board, 0)
-
-        return [["".join(row) for row in config] for config in configs]
+        return [['.' * q + 'Q' + '.' * (n - q - 1) for q in config] for config in res]
