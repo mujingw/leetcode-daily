@@ -17,6 +17,7 @@ class Solution:
             if max_right_allowed < 0:
                 return False
 
-            min_right_needed = max(0, min_right_needed)
+            if min_right_needed < 0:
+                min_right_needed = 0
 
         return min_right_needed == 0
