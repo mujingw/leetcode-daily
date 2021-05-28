@@ -4,6 +4,15 @@ from typing import List
 
 class Solution:
     def findTheCity(self, n: int, edges: List[List[int]], threshold: int) -> int:
+        def build_graph(edges):
+            g = defaultdict(set)
+
+            for u, v, w in edges:
+                g[u].add((v, w))
+                g[v].add((u, w))
+
+            return g
+
         def dijkstra(g, src):
             q = deque([(src, 0)])
             seen = {src: 0}
@@ -18,13 +27,9 @@ class Solution:
 
             return seen
 
-        g = defaultdict(set)
+        g = build_graph(edges)
         src2dests = {}
         city_counts = []
-
-        for u, v, w in edges:
-            g[u].add((v, w))
-            g[v].add((u, w))
 
         for src in range(n):
             src2dests[src] = dijkstra(g, src)
