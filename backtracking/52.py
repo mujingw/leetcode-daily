@@ -1,50 +1,28 @@
-from collections import defaultdict
-
-
 class Solution:
     def totalNQueens(self, n: int) -> int:
-        def can_place_q(x, y):
-            if cols[y] or rows[x] or diag[(1, x + y)] or diag[(0, x - y)]:
-                return False
+        def solve(queens, xy_sum, xy_diff):
+            curr_row = len(queens)
 
-            return True
-
-        def add_queen(board, x, y):
-            board[x][y] = "Q"
-            cols[y] = True
-            rows[x] = True
-            diag[(0, x - y)] = True
-            diag[(1, x + y)] = True
-
-        def remove_queen(board, x, y):
-            diag[(0, x - y)] = False
-            diag[(1, x + y)] = False
-            cols[y] = False
-            rows[x] = False
-            board[x][y] = "."
-
-        def solve(pos, board, q):
-            if pos == EOB:
-                if q == N:
-                    res[0] += 1
-
+            if curr_row == n:
+                res[0] += 1
                 return
 
-            x, y = pos // N, pos % N
+            for curr_col in range(n):
+                if curr_col in queens:
+                    continue
 
-            if board[x][y] == "." and can_place_q(x, y):
-                add_queen(board, x, y)
-                solve(pos + 1, board, q + 1)
-                remove_queen(board, x, y)
+                curr_xy_sum, curr_xy_diff = curr_row + curr_col, curr_row - curr_col
 
-            solve(pos + 1, board, q)
+                if curr_xy_sum not in xy_sum and curr_xy_diff not in xy_diff:
+                    xy_sum.append(curr_xy_sum)
+                    xy_diff.append(curr_xy_diff)
+                    queens.append(curr_col)
+                    solve(queens, xy_sum, xy_diff)
+                    queens.pop()
+                    xy_diff.pop()
+                    xy_sum.pop()
 
-        EOB, N = n * n, n
-        board = [["." for _ in range(N)] for _ in range(N)]
         res = [0]
-        cols = [False] * N
-        rows = [False] * N
-        diag = defaultdict(bool)
-        solve(0, board, 0)
+        solve([], [], [])
 
         return res[0]
