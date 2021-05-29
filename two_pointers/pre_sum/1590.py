@@ -15,9 +15,10 @@ class Solution:
         for i, v in enumerate(nums):
             running = (running + v) % p
             target = (running - goal) % p
-            presum[running] = i
 
             if target in presum:
                 res = min(res, i - presum[target])
+
+            presum[running] = i
 
         return res if res < N else -1
