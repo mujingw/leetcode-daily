@@ -8,25 +8,25 @@ class Solution:
 
             if curr_row == n:
                 res.append(queens[:])
-
                 return
 
             for curr_col in range(n):
-                curr_diff = curr_row - curr_col
-                curr_sum = curr_row + curr_col
+                if curr_col in queens:
+                    continue
 
-                if curr_col not in queens and \
-                        curr_diff not in xy_diff and \
-                        curr_sum not in xy_sum:
+                curr_xy_sum = curr_row + curr_col
+                curr_xy_diff = curr_row - curr_col
+
+                if curr_xy_sum not in xy_sum and curr_xy_diff not in xy_diff:
                     queens.append(curr_col)
-                    xy_diff.append(curr_diff)
-                    xy_sum.append(curr_sum)
+                    xy_diff.add(curr_xy_diff)
+                    xy_sum.add(curr_xy_sum)
                     solve(queens, xy_sum, xy_diff)
-                    xy_sum.pop()
-                    xy_diff.pop()
+                    xy_sum.remove(curr_xy_sum)
+                    xy_diff.remove(curr_xy_diff)
                     queens.pop()
 
         res = []
-        solve([], [], [])
+        solve([], set(), set())
 
-        return [['.' * q + 'Q' + '.' * (n - q - 1) for q in config] for config in res]
+        return [['.' * col + 'Q' + '.' * (n - col - 1) for col in config] for config in res]
