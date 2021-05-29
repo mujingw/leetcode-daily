@@ -38,5 +38,5 @@ class Solution:
                         q.append(next_s)
                         seen.add(next_s)
 
-            if len(valid_s) > 0:
+            if valid_s:
                 return valid_s
