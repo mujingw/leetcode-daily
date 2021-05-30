@@ -1,5 +1,5 @@
-import collections
 from collections import defaultdict
+from collections import deque
 from typing import List
 
 
@@ -30,7 +30,7 @@ class Solution:
                         w = get_weight(dx, dy, r, c)
                         g[(r, c)].add((nx, ny, w))
 
-        q = collections.deque([(0, 0, 0)])
+        q = deque([(0, 0, 0)])
         seen = {(0, 0): 0}
 
         while q:
