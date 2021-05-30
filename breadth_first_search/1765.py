@@ -13,7 +13,6 @@ class Solution:
         for r in range(R):
             for c in range(C):
                 if is_water[r][c] == 1:
-                    res[r][c] = 0
                     q.append((r, c, 0))
                     seen.add((r, c))
 
