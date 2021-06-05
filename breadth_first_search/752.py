@@ -1,16 +1,16 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def openLock(self, deadends: List[str], target: str) -> int:
-        forbidden = set(deadends)
+        deds = set(deadends)
 
-        if "0000" in forbidden:
+        if "0000" in deds:
             return -1
 
-        q = collections.deque([("0000", 0)])
-        seen = set(["0000"])
+        q = deque([("0000", 0)])
+        seen = {"0000"}
 
         while q:
             curr, dist = q.popleft()
@@ -18,16 +18,13 @@ class Solution:
             if curr == target:
                 return dist
 
-            for pos in range(len(curr)):
-                nx_up = curr[:pos] + str((int(curr[pos]) + 1) % 10) + curr[pos + 1:]
-                nx_down = curr[:pos] + str((int(curr[pos]) - 1) % 10) + curr[pos + 1:]
+            for i in range(len(curr)):
+                next_up = curr[:i] + str((int(curr[i]) + 1) % 10) + curr[i + 1:]
+                next_down = curr[:i] + str((int(curr[i]) - 1) % 10) + curr[i + 1:]
 
-                if nx_up not in seen and nx_up not in forbidden:
-                    q.append((nx_up, dist + 1))
-                    seen.add(nx_up)
-
-                if nx_down not in seen and nx_down not in forbidden:
-                    q.append((nx_down, dist + 1))
-                    seen.add(nx_down)
+                for next_step in [next_up, next_down]:
+                    if next_step not in seen and next_step not in deds:
+                        seen.add(next_step)
+                        q.append((next_step, dist + 1))
 
         return -1
