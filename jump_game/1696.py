@@ -1,21 +1,21 @@
-from collections import deque
+from typing import List
+
+from sortedcontainers import SortedList
 
 
-class Solution(object):
-    def maxResult(self, nums, k):
-        scores = [float("-inf")] * len(nums)
-        scores[0] = nums[0]
-        mono_q = deque([0])
+class Solution:
+    def maxResult(self, nums: List[int], k: int) -> int:
+        sl = SortedList()
+        N = len(nums)
+        dp = [0] * N
+        dp[0] = nums[0]
+        sl.add(dp[0])
 
-        for i, num in enumerate(nums[1:], 1):
-            while mono_q and mono_q[0] < i - k:
-                mono_q.popleft()
+        for i, val in enumerate(nums[1:], 1):
+            if i - k - 1 >= 0:
+                sl.remove(dp[i - k - 1])
 
-            scores[i] = scores[mono_q[0]] + num
+            dp[i] = sl[-1] + val
+            sl.add(dp[i])
 
-            while mono_q and scores[mono_q[-1]] < scores[i]:
-                mono_q.pop()
-
-            mono_q.append(i)
-
-        return scores[-1]
+        return dp[-1]
