@@ -1,6 +1,6 @@
-from _ast import List
 from collections import defaultdict
 from itertools import product
+from typing import List
 
 
 class Solution:
