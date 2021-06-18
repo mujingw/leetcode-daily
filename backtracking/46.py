@@ -3,13 +3,14 @@ from typing import List
 
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
-        def dfs(res, curr, nums, used):
-            if len(curr) == len(nums):
-                res.append(curr[:])
+        N = len(nums)
 
+        def dfs(res, curr, nums, used):
+            if len(curr) == N:
+                res.append(curr[:])
                 return
 
-            for i in range(len(nums)):
+            for i in range(N):
                 if used[i]:
                     continue
 
@@ -19,8 +20,7 @@ class Solution:
                 used[i] = False
                 curr.pop()
 
-        used = [False] * len(nums)
         res = []
-        dfs(res, [], nums, used)
+        dfs(res, [], nums, [False] * N)
 
         return res
