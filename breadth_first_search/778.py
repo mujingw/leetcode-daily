@@ -1,4 +1,4 @@
-import collections
+from collections import deque
 from typing import List
 
 
@@ -8,8 +8,8 @@ class Solution:
             if grid[0][0] > T:
                 return False
 
-            q = collections.deque([(0, 0)])
-            seen = set((0, 0))
+            q = deque([(0, 0)])
+            seen = {(0, 0)}
 
             while q:
                 cx, cy = q.popleft()
