@@ -3,35 +3,28 @@ from typing import List
 
 
 class Solution:
-    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        def dfs(temp, perm, g, curr):
-            if temp[curr]:
+    def canFinish(self, N: int, pre: List[List[int]]) -> bool:
+        def dfs(node, visited, visiting):
+            if node in visiting:
                 return False
 
-            if perm[curr]:
+            if node in visited:
                 return True
 
-            temp[curr] = True
+            visiting.add(node)
 
-            for neig in g[curr]:
-                if not dfs(temp, perm, g, neig):
+            for neig in g[node]:
+                if not dfs(neig, visited, visiting):
                     return False
 
-            temp[curr] = False
-            perm[curr] = True
+            visiting.remove(node)
+            visited.add(node)
 
             return True
 
         g = defaultdict(set)
 
-        for course, prereq in prerequisites:
+        for course, prereq in pre:
             g[prereq].add(course)
 
-        temp = [False] * numCourses
-        perm = [False] * numCourses
-
-        for pre in list(g.keys()):
-            if not dfs(temp, perm, g, pre):
-                return False
-
-        return True
+        return all(dfs(course, set(), set()) for course in range(N))
