@@ -4,6 +4,7 @@ from functools import lru_cache
 class Solution:
     def findPaths(self, m: int, n: int, max_moves: int, sr: int, sc: int) -> int:
         MOD = int(1e9) + 7
+        DIR = ((0, 1), (0, -1), (-1, 0), (1, 0))
 
         @lru_cache(None)
         def dfs(r, c, k):
@@ -13,6 +14,6 @@ class Solution:
             if k == 0:
                 return 0
 
-            return dfs(r - 1, c, k - 1) + dfs(r, c - 1, k - 1) + dfs(r + 1, c, k - 1) + dfs(r, c + 1, k - 1)
+            return sum(dfs(r + dr, c + dc, k - 1) for dr, dc in DIR)
 
         return dfs(sr, sc, max_moves) % MOD
