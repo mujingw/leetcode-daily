@@ -9,7 +9,7 @@ class Solution:
         for u, v in edges:
             g[u].add(v)
 
-        def dfs(curr, g, visiting, visited):
+        def dfs(curr, g, visiting):
             if not g[curr]:
                 return curr == destination
 
@@ -17,9 +17,9 @@ class Solution:
                 return False
 
             visiting.add(curr)
-            ok = all(dfs(neig, g, visiting, visited) for neig in g[curr])
+            ok = all(dfs(neig, g, visiting) for neig in g[curr])
             visiting.remove(curr)
 
             return ok
 
-        return dfs(source, g, set(), set())
+        return dfs(source, g, set())
