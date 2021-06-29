@@ -1,30 +1,25 @@
 from collections import defaultdict
+from functools import lru_cache
 from typing import List
 
 
 class Solution:
     def canFinish(self, N: int, pre: List[List[int]]) -> bool:
-        def dfs(node, visited, visiting):
+        g = defaultdict(set)
+        visiting = set()
+
+        @lru_cache(None)
+        def dfs(node):
             if node in visiting:
                 return False
 
-            if node in visited:
-                return True
-
             visiting.add(node)
-
-            for neig in g[node]:
-                if not dfs(neig, visited, visiting):
-                    return False
-
+            ok = all(dfs(neig) for neig in g[node])
             visiting.remove(node)
-            visited.add(node)
 
-            return True
-
-        g = defaultdict(set)
+            return ok
 
         for course, prereq in pre:
             g[prereq].add(course)
 
-        return all(dfs(course, set(), set()) for course in range(N))
+        return all(dfs(course) for course in range(N))
