@@ -1,5 +1,5 @@
-import random
 from itertools import accumulate
+from random import uniform
 from typing import List
 
 
@@ -9,7 +9,7 @@ class Solution:
         self.w_sum = list(accumulate(w))
 
     def pickIndex(self) -> int:
-        target = random.uniform(0, self.w_sum[-1])
+        target = uniform(0, self.w_sum[-1])
         left, right = 0, len(self.w_sum)
 
         while left < right:
