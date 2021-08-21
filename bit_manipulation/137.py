@@ -7,7 +7,7 @@ class Solution:
         ones, twos = 0, 0
 
         for i in range(N):
-            ones = (ones ^ nums[i]) & ~twos;
-            twos = (twos ^ nums[i]) & ~ones;
+            ones = (ones ^ nums[i]) & ~twos
+            twos = (twos ^ nums[i]) & ~ones
 
         return ones
