@@ -47,7 +47,7 @@ class Codec:
 
             return root
 
-        return helper(deque(data.split(",")))
+        return helper(deque(data.split(self.DELIMITER)))
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
