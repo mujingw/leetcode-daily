@@ -3,14 +3,17 @@ from typing import List
 
 class Solution:
     def fourSum(self, nums: List[int], target: int) -> List[List[int]]:
-        def dfs(res, curr, l, r, t, N):
-            if r - l + 1 < N or N < 2:
+        def dfs(res, curr, l, r, t, k):
+            if l + k - 1 > r:
                 return
 
-            if t < nums[l] * N or t > nums[r] * N:
+            if k < 2:
                 return
 
-            if N == 2:
+            if t < nums[l] * k or t > nums[r] * k:
+                return
+
+            if k == 2:
                 while l < r:
                     s = nums[l] + nums[r]
 
@@ -30,11 +33,11 @@ class Solution:
                         continue
 
                     curr.append(nums[i])
-                    dfs(res, curr, i + 1, r, t - nums[i], N - 1)
+                    dfs(res, curr, i + 1, r, t - nums[i], k - 1)
                     curr.pop()
 
-        nums.sort()
         res = []
+        nums.sort()
         dfs(res, [], 0, len(nums) - 1, target, 4)
 
         return res
