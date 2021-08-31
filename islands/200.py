@@ -44,16 +44,18 @@ class Solution:
 
         for i in range(R):
             for j in range(C):
-                if grid[i][j] == '1':
-                    idx = i * C + j
-                    uf.add(idx)
+                if grid[i][j] == '0':
+                    continue
 
-                    for dx, dy in DIR:
-                        nx, ny = i + dx, j + dy
+                idx = i * C + j
+                uf.add(idx)
 
-                        if 0 <= nx < R and 0 <= ny < C and grid[nx][ny] == '1':
-                            neighbor_idx = nx * C + ny
-                            uf.add(neighbor_idx)
-                            uf.union(idx, neighbor_idx)
+                for dx, dy in DIR:
+                    nx, ny = i + dx, j + dy
+
+                    if 0 <= nx < R and 0 <= ny < C and grid[nx][ny] == '1':
+                        neighbor_idx = nx * C + ny
+                        uf.add(neighbor_idx)
+                        uf.union(idx, neighbor_idx)
 
         return uf.count
