@@ -39,8 +39,8 @@ class UF:
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
         R, C = len(grid), len(grid[0])
-        uf = UF()
         DIR = ((0, 1), (0, -1), (-1, 0), (1, 0))
+        uf = UF()
 
         for i in range(R):
             for j in range(C):
