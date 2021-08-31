@@ -8,10 +8,18 @@ class UF:
         self.count = 0
 
     def add(self, i):
-        if i not in self.parent and i not in self.rank:
-            self.rank[i] = 1
-            self.parent[i] = i
-            self.count += 1
+        if self.exists(i):
+            return
+
+        self.rank[i] = 1
+        self.parent[i] = i
+        self.count += 1
+
+    def size(self):
+        return self.count
+
+    def exists(self, i):
+        return i in self.parent or i in self.rank
 
     def union(self, u, v):
         ru, rv = self.find(u), self.find(v)
@@ -58,4 +66,4 @@ class Solution:
                         uf.add(neighbor_idx)
                         uf.union(idx, neighbor_idx)
 
-        return uf.count
+        return uf.size()
