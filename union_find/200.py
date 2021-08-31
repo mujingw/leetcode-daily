@@ -33,13 +33,13 @@ class Solution:
         for i in range(R):
             for j in range(C):
                 if grid[i][j] == '1':
-                    idx = self.convert(i, j, R, C)
+                    idx = self.convert(i, j, C)
 
                     for dx, dy in DIR:
                         nx, ny = i + dx, j + dy
 
                         if self.is_valid(grid, nx, ny, R, C):
-                            neighbor_idx = self.convert(nx, ny, R, C)
+                            neighbor_idx = self.convert(nx, ny, C)
                             uf.union(idx, neighbor_idx)
 
         parents = set()
@@ -47,12 +47,12 @@ class Solution:
         for r in range(R):
             for c in range(C):
                 if grid[r][c] == '1':
-                    parents.add(uf.find(self.convert(r, c, R, C)))
+                    parents.add(uf.find(self.convert(r, c, C)))
 
         return len(parents)
 
     def is_valid(self, grid, x, y, R, C):
         return 0 <= x < R and 0 <= y < C and grid[x][y] == '1'
 
-    def convert(self, x, y, R, C):
+    def convert(self, x, y, C):
         return x * C + y
