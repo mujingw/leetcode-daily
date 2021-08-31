@@ -45,21 +45,15 @@ class Solution:
         for i in range(R):
             for j in range(C):
                 if grid[i][j] == '1':
-                    idx = self.convert(i, j, C)
+                    idx = i * C + j
                     uf.add(idx)
 
                     for dx, dy in DIR:
                         nx, ny = i + dx, j + dy
 
-                        if self.is_valid(grid, nx, ny, R, C):
-                            neighbor_idx = self.convert(nx, ny, C)
+                        if 0 <= nx < R and 0 <= ny < C and grid[nx][ny] == '1':
+                            neighbor_idx = nx * C + ny
                             uf.add(neighbor_idx)
                             uf.union(idx, neighbor_idx)
 
         return uf.count
-
-    def is_valid(self, grid, x, y, R, C):
-        return 0 <= x < R and 0 <= y < C and grid[x][y] == '1'
-
-    def convert(self, x, y, C):
-        return x * C + y
