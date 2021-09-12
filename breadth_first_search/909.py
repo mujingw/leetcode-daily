@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def snakesAndLadders(self, board: List[List[int]]) -> int:
         N = len(board)
-        q = collections.deque([(N - 1, 0, 0)])
+        q = deque([(N - 1, 0, 0)])
         seen = set([(N - 1, 0)])
         n2xy = {}
         xy2n = {}
