@@ -1,10 +1,10 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def jump(self, nums: List[int]) -> int:
-        q = collections.deque([(0, 0)])
+        q = deque([(0, 0)])
         seen = set([0])
         N = len(nums)
 
