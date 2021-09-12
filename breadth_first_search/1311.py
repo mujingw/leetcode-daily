@@ -1,12 +1,12 @@
-import collections
+from collections import defaultdict, deque
 from typing import List
 
 
 class Solution:
     def watchedVideosByFriends(self, watchedVideos: List[List[str]], friends: List[List[int]], my_id: int,
                                level: int) -> List[str]:
-        q = collections.deque([(my_id, 0)])
-        level_k_movies = collections.defaultdict(int)
+        q = deque([(my_id, 0)])
+        level_k_movies = defaultdict(int)
         seen = set([my_id])
 
         while q:
