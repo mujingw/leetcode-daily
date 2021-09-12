@@ -1,6 +1,5 @@
-import collections
 from bisect import bisect
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import List
 
 
@@ -22,7 +21,7 @@ class Solution:
 
         total_area = 0
         MOD = 10 ** 9 + 7
-        y2x_itvls = defaultdict(collections.deque)
+        y2x_itvls = defaultdict(deque)
 
         for x1, y1, x2, y2 in rectangles:
             if y1 != y2:
