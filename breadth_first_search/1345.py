@@ -1,11 +1,10 @@
-import collections
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import List
 
 
 class Solution:
     def minJumps(self, arr: List[int]) -> int:
-        q = collections.deque([(0, 0)])
+        q = deque([(0, 0)])
         seen = set([0])
         val_to_idx = defaultdict(list)
 
