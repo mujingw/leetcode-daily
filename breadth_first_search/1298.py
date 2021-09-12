@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def maxCandies(self, status: List[int], candies: List[int], keys: List[List[int]], containedBoxes: List[List[int]],
                    initialBoxes: List[int]) -> int:
-        q = collections.deque(initialBoxes)
+        q = deque(initialBoxes)
         seen = set(initialBoxes)
         res = 0
         on_hold = set([])
