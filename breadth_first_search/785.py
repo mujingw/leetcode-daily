@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def isBipartite(self, graph: List[List[int]]) -> bool:
         def bfs(node):
-            q = collections.deque([(node, 'B')])
+            q = deque([(node, 'B')])
             blue.add(node)
 
             while q:
