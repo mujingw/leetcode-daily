@@ -1,4 +1,4 @@
-import collections
+from collections import deque
 from typing import List
 
 
@@ -6,7 +6,7 @@ class Solution:
     def shortestDistance(self, maze: List[List[int]], start: List[int], dest: List[int]) -> int:
         sx, sy = start[0], start[1]
         ex, ey = dest[0], dest[1]
-        q = collections.deque([(sx, sy, 0)])
+        q = deque([(sx, sy, 0)])
         seen = {(sx, sy): 0}
         DIR = ((0, 1), (1, 0), (-1, 0), (0, -1))
         R, C = len(maze), len(maze[0])
