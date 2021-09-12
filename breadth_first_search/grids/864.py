@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def shortestPathAllKeys(self, grid: List[str]) -> int:
         def bfs(x, y, key_count):
-            q = collections.deque([(x, y, "", 0)])
+            q = deque([(x, y, "", 0)])
             seen = set([(x, y, "")])
 
             while q:
