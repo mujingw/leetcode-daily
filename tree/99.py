@@ -1,4 +1,4 @@
-import collections
+from collections import deque
 
 
 class TreeNode:
@@ -31,7 +31,7 @@ class Solution:
 
             return res
 
-        vals = collections.deque(sorted(inorder(root)))
+        vals = deque(sorted(inorder(root)))
         s = []
         push_left(s, root)
 
