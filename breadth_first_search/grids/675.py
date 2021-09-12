@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def cutOffTree(self, forest: List[List[int]]) -> int:
         def bfs(r0, c0, tx, ty):
-            q = collections.deque([(r0, c0, 0)])
+            q = deque([(r0, c0, 0)])
             seen = set([(r0, c0)])
 
             while q:
