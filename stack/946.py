@@ -1,12 +1,12 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def validateStackSequences(self, pushed: List[int], popped: List[int]) -> bool:
         s = []
-        pushed = collections.deque(pushed)
-        popped = collections.deque(popped)
+        pushed = deque(pushed)
+        popped = deque(popped)
 
         while pushed:
             s.append(pushed.popleft())
