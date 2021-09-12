@@ -1,5 +1,4 @@
-import collections
-from collections import defaultdict
+from collections import defaultdict, deque
 from functools import lru_cache
 from typing import List
 
@@ -16,7 +15,7 @@ class Solution:
             return g
 
         def bfs(g, src):
-            q = collections.deque([(src, 0)])
+            q = deque([(src, 0)])
             seen = {src: 0}
 
             while q:
