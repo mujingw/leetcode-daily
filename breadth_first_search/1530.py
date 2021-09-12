@@ -1,5 +1,4 @@
-import collections
-from collections import defaultdict
+from collections import defaultdict, deque
 
 
 # Definition for a binary tree node.
@@ -13,7 +12,7 @@ class TreeNode:
 class Solution:
     def countPairs(self, root: TreeNode, distance: int) -> int:
         def bfs(src):
-            q = collections.deque([(src, 0)])
+            q = deque([(src, 0)])
             seen = set([src])
 
             while q:
