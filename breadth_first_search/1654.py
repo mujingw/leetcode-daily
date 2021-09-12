@@ -1,10 +1,10 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def minimumJumps(self, forbidden: List[int], a: int, b: int, x: int) -> int:
-        q = collections.deque([(0, "none", 0)])
+        q = deque([(0, "none", 0)])
         seen = set([0])
         forbidden = set(forbidden)
         max_pos = max(x, max(forbidden)) + a + b
