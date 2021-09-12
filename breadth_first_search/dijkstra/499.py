@@ -1,4 +1,4 @@
-import collections
+from collections import deque
 from typing import List
 
 
@@ -6,7 +6,7 @@ class Solution:
     def findShortestWay(self, maze: List[List[int]], ball: List[int], hole: List[int]) -> str:
         DIR = ((1, 0, 'd'), (0, -1, 'l'), (0, 1, 'r'), (-1, 0, 'u'))
         res = set([])
-        q = collections.deque([(ball[0], ball[1], "", 0)])
+        q = deque([(ball[0], ball[1], "", 0)])
         seen = {(ball[0], ball[1]): 0}
         hx, hy = hole[0], hole[1]
         R, C = len(maze), len(maze[0])
