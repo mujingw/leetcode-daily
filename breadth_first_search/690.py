@@ -1,5 +1,4 @@
-import collections
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import List
 
 
@@ -15,7 +14,7 @@ class Solution:
             for ee in emp.subordinates:
                 g[emp.id].add(ee)
 
-        q = collections.deque([eid])
+        q = deque([eid])
 
         while q:
             curr = q.popleft()
