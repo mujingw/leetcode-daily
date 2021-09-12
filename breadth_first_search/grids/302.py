@@ -1,4 +1,4 @@
-import collections
+from collections import deque
 from typing import List
 
 
@@ -6,7 +6,7 @@ class Solution:
     def minArea(self, image: List[List[str]], x: int, y: int) -> int:
         DIR = ((0, 1), (0, -1), (-1, 0), (1, 0))
         R, C = len(image), len(image[0])
-        q = collections.deque([(x, y)])
+        q = deque([(x, y)])
         seen = set([(x, y)])
 
         while q:
