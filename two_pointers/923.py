@@ -1,11 +1,11 @@
-import collections
+from collections import Counter
 from math import comb
 from typing import List
 
 
 class Solution:
     def threeSumMulti(self, arr: List[int], target: int) -> int:
-        counter = collections.Counter(arr)
+        counter = Counter(arr)
         arr.sort()
         MOD, N, res = 10 ** 9 + 7, len(arr), 0
 
