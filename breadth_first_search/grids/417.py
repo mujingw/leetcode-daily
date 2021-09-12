@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def pacificAtlantic(self, matrix: List[List[int]]) -> List[List[int]]:
         def bfs(r0, c0):
-            q = collections.deque([(r0, c0)])
+            q = deque([(r0, c0)])
             seen = set([(r0, c0)])
 
             while q:
