@@ -1,10 +1,10 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def canReach(self, arr: List[int], start: int) -> bool:
-        q = collections.deque([start])
+        q = deque([start])
         seen = set([start])
         N = len(arr)
 
