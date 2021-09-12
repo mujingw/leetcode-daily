@@ -1,12 +1,11 @@
-import collections
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import List
 
 
 class Solution:
     def numOfMinutes(self, n: int, headID: int, manager: List[int], informTime: List[int]) -> int:
         def bfs(root):
-            q = collections.deque([(root, 0)])
+            q = deque([(root, 0)])
             res = 0
 
             while q:
