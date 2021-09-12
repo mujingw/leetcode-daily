@@ -1,11 +1,11 @@
-import collections
+from collections import Counter
 
 
 class Solution:
     def balancedString(self, s: str) -> int:
         N, D = len(s), len(s) // 4
         res, l, r = N, 0, 0
-        c = collections.Counter(s)
+        c = Counter(s)
 
         while r < N:
             c[s[r]] -= 1
