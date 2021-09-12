@@ -1,11 +1,11 @@
-import collections
+from collections import deque
 from typing import List
 
 
 class Solution:
     def ladderLength(self, beginWord: str, endWord: str, wordList: List[str]) -> int:
         wl = set(wordList)
-        q = collections.deque([(beginWord, 1)])
+        q = deque([(beginWord, 1)])
         seen = set([beginWord])
 
         while q:
