@@ -1,4 +1,4 @@
-import collections
+from collections import deque
 
 
 # Definition for a Node.
@@ -21,7 +21,7 @@ class Codec:
         """
 
         def bfs(root):
-            q = collections.deque([root, None])
+            q = deque([root, None])
             res = []
 
             while q:
@@ -54,7 +54,7 @@ class Codec:
         """
 
         def build_tree(root, nodes):
-            q = collections.deque([root])
+            q = deque([root])
 
             while q:
                 curr = q.popleft()
@@ -72,7 +72,7 @@ class Codec:
 
             return root
 
-        nodes = collections.deque(data.split(self.NODE_DELIMITER))
+        nodes = deque(data.split(self.NODE_DELIMITER))
         root_val = nodes.popleft()
 
         if root_val == self.NULL:
