@@ -1,13 +1,29 @@
+from itertools import product
 from typing import List
 
 
 class UF:
-    def __init__(self, size):
-        self.rank = [0] * size
-        self.parent = [i for i in range(size)]
+    def __init__(self):
+        self.parent = {}
+        self.rank = {}
+        self.count = 0
+
+    def add(self, x):
+        if x in self.parent or x in self.rank:
+            return
+
+        self.parent[x] = x
+        self.rank[x] = 1
+        self.count += 1
+
+    def size(self):
+        return self.count
 
     def union(self, u, v):
         ru, rv = self.find(u), self.find(v)
+
+        if ru == rv:
+            return
 
         if self.rank[ru] < self.rank[rv]:
             self.parent[ru] = rv
@@ -17,29 +33,24 @@ class UF:
             self.parent[rv] = ru
             self.rank[ru] += 1
 
+        self.count -= 1
+
     def find(self, x):
-        if x != self.parent[x]:
+        if self.parent[x] != x:
             self.parent[x] = self.find(self.parent[x])
 
         return self.parent[x]
 
 
 class Solution:
-    def findCircleNum(self, isConnected: List[List[int]]) -> int:
-        N = len(isConnected)
-        uf = UF(N)
+    def findCircleNum(self, grid: List[List[int]]) -> int:
+        R, C = len(grid), len(grid[0])
+        uf = UF()
 
-        for i in range(N):
-            for j in range(N):
-                if isConnected[i][j] == 1:
-                    uf.union(i, j)
+        for r, c in product(range(R), range(C)):
+            if grid[r][c] == 1:
+                uf.add(r)
+                uf.add(c)
+                uf.union(r, c)
 
-        parents = set()
-
-        for i in range(N):
-            p = uf.find(i)
-
-            if p not in parents:
-                parents.add(p)
-
-        return len(parents)
+        return uf.size()
