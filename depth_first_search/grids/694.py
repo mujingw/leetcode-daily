@@ -18,15 +18,14 @@ class Solution:
 
             for dx, dy, di in DIR:
                 nr, nc = r + dx, c + dy
-                curr += (dfs(di, nr, nc) + opposite[di])
+                curr += (dfs(di, nr, nc) + OPPOSITE[di])
 
             return curr
 
         R, C = len(grid), len(grid[0])
         DIR = ((0, 1, 'R'), (0, -1, 'L'), (-1, 0, 'U'), (1, 0, 'D'))
-        opposite = {'R': 'L', 'D': 'U', 'U': 'D', 'L': 'R'}
-        visited = set()
-        islands = set()
+        OPPOSITE = {'R': 'L', 'D': 'U', 'U': 'D', 'L': 'R'}
+        visited, islands = set(), set()
 
         for r, c in product(range(R), range(C)):
             if grid[r][c] == 1:
