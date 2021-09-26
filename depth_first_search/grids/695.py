@@ -14,8 +14,8 @@ class Solution:
             if (x, y) in visited:
                 return 0
 
-            res = 1
             visited.add((x, y))
+            res = 1
 
             for dx, dy in DIR:
                 res += dfs(x + dx, y + dy)
