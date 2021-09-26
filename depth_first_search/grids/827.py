@@ -33,14 +33,13 @@ class Solution:
                 continue
 
             neig_colors = set()
+            size_formed = 1
 
             for dx, dy in DIR:
                 nr, nc = r + dx, c + dy
 
                 if 0 <= nr < R and 0 <= nc < C and grid[nr][nc] != 0:
                     neig_colors.add(grid[nr][nc])
-
-            size_formed = 1
 
             for color in neig_colors:
                 size_formed += component_size[color]
