@@ -15,12 +15,12 @@ class Solution:
                 return 0
 
             visited.add((x, y))
-            res = 1
+            area = 1
 
             for dx, dy in DIR:
-                res += dfs(x + dx, y + dy)
+                area += dfs(x + dx, y + dy)
 
-            return res
+            return area
 
         R, C = len(grid), len(grid[0])
         DIR = ((0, 1), (0, -1), (-1, 0), (1, 0))
