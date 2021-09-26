@@ -18,12 +18,6 @@ class Solution:
 
         N = len(graph)
         terminals = set([i for i in range(N) if not graph[i]])
-        res = []
+        visited = set()
 
-        for i in range(N):
-            visited = set()
-
-            if dfs(i):
-                res.append(i)
-
-        return res
+        return [i for i in range(N) if dfs(i)]
