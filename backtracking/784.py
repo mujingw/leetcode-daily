@@ -2,29 +2,26 @@ from typing import List
 
 
 class Solution:
-    def letterCasePermutation(self, S: str) -> List[str]:
-        def dfs(res, curr, pos):
-            if len(curr) == len(S):
-                res.append("".join(curr))
+    def letterCasePermutation(self, s: str) -> List[str]:
+        def backtrack(res, curr, pos):
+            if pos == N:
+                res.append(''.join(curr))
 
                 return
 
-            ch = S[pos]
-
-            curr.append(ch)
-            dfs(res, curr, pos + 1)
+            val = s[pos]
+            curr.append(val)
+            backtrack(res, curr, pos + 1)
             curr.pop()
 
-            if ch.isalpha():
-                if ch.islower():
-                    curr.append(ch.upper())
-                else:
-                    curr.append(ch.lower())
-
-                dfs(res, curr, pos + 1)
+            if val.isalpha():
+                alt = val.upper() if val.islower() else val.lower()
+                curr.append(alt)
+                backtrack(res, curr, pos + 1)
                 curr.pop()
 
+        N = len(s)
         res = []
-        dfs(res, [], 0)
+        backtrack(res, [], 0)
 
         return res
