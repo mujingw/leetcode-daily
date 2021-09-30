@@ -1,4 +1,3 @@
-from functools import lru_cache
 from typing import List
 
 
@@ -10,17 +9,22 @@ class Solution:
         if len(nums) == 2:
             return max(nums)
 
-        return max(nums[0] + self.house_robber_one(nums[2:-1]),
-                   self.house_robber_one(nums[1:]))
+        return max(nums[0] + self.rob_linear(nums[2:-1]),
+                   self.rob_linear(nums[1:]))
 
-    def house_robber_one(self, nums):
-        @lru_cache(None)
-        def helper(pos):
-            if pos >= N:
-                return 0
+    def rob_linear(self, nums):
+        return self.helper(0, nums, {})
 
-            return max(nums[pos] + helper(pos + 2), helper(pos + 1))
+    def helper(self, pos, nums, memo):
+        if pos in memo:
+            return memo[pos]
 
-        N = len(nums)
+        if pos >= len(nums):
+            return 0
 
-        return helper(0)
+        res = max(nums[pos] + self.helper(pos + 2, nums, memo),
+                  self.helper(pos + 1, nums, memo))
+
+        memo[pos] = res
+
+        return res
