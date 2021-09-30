@@ -10,14 +10,14 @@ class Solution:
 
         nums.sort(reverse=True)
 
-        return self.dfs(nums, total // k, 0, 0, [False] * len(nums), total, k)
+        return self.backtrack(nums, total // k, 0, 0, [False] * len(nums), total, k)
 
-    def dfs(self, nums, target, pos, count, used, total, k):
+    def backtrack(self, nums, target, pos, count, used, total, k):
         if count == k:
             return True
 
         if target == 0:
-            return self.dfs(nums, total // k, 0, count + 1, used, total, k)
+            return self.backtrack(nums, total // k, 0, count + 1, used, total, k)
 
         last_failed_num = -1
 
@@ -27,7 +27,7 @@ class Solution:
 
             used[i] = True
 
-            if self.dfs(nums, target - nums[i], i + 1, count, used, total, k):
+            if self.backtrack(nums, target - nums[i], i + 1, count, used, total, k):
                 return True
 
             used[i] = False
