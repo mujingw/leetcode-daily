@@ -1,17 +1,20 @@
-from functools import lru_cache
 from typing import List
 
 
 class Solution:
-    def findTargetSumWays(self, nums: List[int], S: int) -> int:
-        @lru_cache(None)
-        def helper(t, pos):
-            if pos == len(nums):
-                return 1 if t == 0 else 0
+    def findTargetSumWays(self, nums: List[int], target: int) -> int:
+        return self.dfs(nums, 0, target, {})
 
-            p = helper(t - nums[pos], pos + 1)
-            n = helper(t + nums[pos], pos + 1)
+    def dfs(self, nums, pos, target, memo):
+        if pos == len(nums):
+            return 1 if target == 0 else 0
 
-            return p + n
+        if (pos, target) in memo:
+            return memo[(pos, target)]
 
-        return helper(S, 0)
+        res = self.dfs(nums, pos + 1, target - nums[pos], memo)
+        res += self.dfs(nums, pos + 1, target + nums[pos], memo)
+
+        memo[(pos, target)] = res
+
+        return res
