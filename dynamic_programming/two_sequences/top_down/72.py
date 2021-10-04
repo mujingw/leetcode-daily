@@ -12,15 +12,15 @@ class Solution:
         if (w1, w2) in memo:
             return memo[(w1, w2)]
 
-        res = 0
+        res = float('inf')
 
         if w1[-1] == w2[-1]:
-            res = self.dfs(w1[:-1], w2[:-1], memo)
+            res = min(res, self.dfs(w1[:-1], w2[:-1], memo))
         else:
-            adjust_w1 = self.dfs(w1[:-1], w2, memo)
-            adjust_w2 = self.dfs(w1, w2[:-1], memo)
-            adjust_both = self.dfs(w1[:-1], w2[:-1], memo)
-            res = min(adjust_w1, adjust_w2, adjust_both) + 1
+            delete = self.dfs(w1[:-1], w2, memo)
+            insert = self.dfs(w1, w2[:-1], memo)
+            replace = self.dfs(w1[:-1], w2[:-1], memo)
+            res = min(delete, insert, replace) + 1
 
         memo[(w1, w2)] = res
 
