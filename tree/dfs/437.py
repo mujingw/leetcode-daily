@@ -24,8 +24,8 @@ class Solution:
             return
 
         sum_so_far += node.val
-        need = sum_so_far - target
-        self.res += d[need]
+        diff_needed = sum_so_far - target
+        self.res += d[diff_needed]
         d[sum_so_far] += 1
         self.backtrack(sum_so_far, d, node.left, target)
         self.backtrack(sum_so_far, d, node.right, target)
