@@ -15,18 +15,18 @@ class Solution:
         self.res = 0
         d = defaultdict(int)
         d[0] += 1
-        self.dfs(0, d, root, target_sum)
+        self.backtrack(0, d, root, target_sum)
 
         return self.res
 
-    def dfs(self, total, d, node, target):
+    def backtrack(self, sum_so_far, d, node, target):
         if not node:
             return
 
-        total += node.val
-        need = total - target
+        sum_so_far += node.val
+        need = sum_so_far - target
         self.res += d[need]
-        d[total] += 1
-        self.dfs(total, d, node.left, target)
-        self.dfs(total, d, node.right, target)
-        d[total] -= 1
+        d[sum_so_far] += 1
+        self.backtrack(sum_so_far, d, node.left, target)
+        self.backtrack(sum_so_far, d, node.right, target)
+        d[sum_so_far] -= 1
