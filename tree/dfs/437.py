@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Optional
 
 
 # Definition for a binary tree node.
@@ -10,22 +11,22 @@ class TreeNode:
 
 
 class Solution:
-    def pathSum(self, root: TreeNode, target_sum: int) -> int:
-        def dfs(res, node, curr, d, t):
-            if not node:
-                return
-
-            if d[(curr + node.val) - t] > 0:
-                res[0] += d[curr + node.val - t]
-
-            d[curr + node.val] += 1
-            dfs(res, node.left, curr + node.val, d, t)
-            dfs(res, node.right, curr + node.val, d, t)
-            d[curr + node.val] -= 1
-
-        res = [0]
+    def pathSum(self, root: Optional[TreeNode], target_sum: int) -> int:
+        self.res = 0
         d = defaultdict(int)
-        d[0] = 1
-        dfs(res, root, 0, d, target_sum)
+        d[0] += 1
+        self.dfs(0, d, root, target_sum)
 
-        return res[0]
+        return self.res
+
+    def dfs(self, total, d, node, target):
+        if not node:
+            return
+
+        total += node.val
+        need = total - target
+        self.res += d[need]
+        d[total] += 1
+        self.dfs(total, d, node.left, target)
+        self.dfs(total, d, node.right, target)
+        d[total] -= 1
