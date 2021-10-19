@@ -1,14 +1,15 @@
+from collections import defaultdict
 from typing import List
 
 
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        s, lookup, res = [], {}, []
+        res, stack, mapping = [], [], defaultdict(lambda: -1)
 
-        for num in nums2:
-            while s and s[-1] < num:
-                lookup[s.pop()] = num
+        for x in nums2:
+            while stack and x > stack[-1]:
+                mapping[stack.pop()] = x
 
-            s.append(num)
+            stack.append(x)
 
-        return [lookup[num] if num in lookup else -1 for num in nums1]
+        return [mapping[x] for x in nums1]
