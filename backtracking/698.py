@@ -8,29 +8,33 @@ class Solution:
         if total % k != 0:
             return False
 
-        nums.sort(reverse=True)
+        self.N = len(nums)
+        self.k = k
+        self.nums = sorted(nums, reverse=True)
+        self.used = [False] * self.N
+        self.target = total // k
 
-        return self.backtrack(nums, total // k, 0, 0, [False] * len(nums), total, k)
+        return self.backtrack(total // k, 0, 0)
 
-    def backtrack(self, nums, target, pos, count, used, total, k):
-        if count == k:
+    def backtrack(self, t, start_at, count):
+        if count == self.k:
             return True
 
-        if target == 0:
-            return self.backtrack(nums, total // k, 0, count + 1, used, total, k)
+        if t == 0:
+            return self.backtrack(self.target, 0, count + 1)
 
         last_failed_num = -1
 
-        for i in range(pos, len(nums)):
-            if used[i] or nums[i] > target or nums[i] == last_failed_num:
+        for i in range(start_at, self.N):
+            if self.used[i] or self.nums[i] > t or self.nums[i] == last_failed_num:
                 continue
 
-            used[i] = True
+            self.used[i] = True
 
-            if self.backtrack(nums, target - nums[i], i + 1, count, used, total, k):
+            if self.backtrack(t - self.nums[i], i + 1, count):
                 return True
 
-            used[i] = False
-            last_failed_num = nums[i]
+            self.used[i] = False
+            last_failed_num = self.nums[i]
 
         return False
