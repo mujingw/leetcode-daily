@@ -1,19 +1,16 @@
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
         stack = []
-        res = list(s)
 
         for i, ch in enumerate(s):
-            if ch in '()':
-                if not stack:
-                    stack.append((ch, i))
+            if ch == '(':
+                stack.append((ch, i))
+            elif ch == ')':
+                if stack and stack[-1][0] == '(':
+                    stack.pop()
                 else:
-                    if stack[-1][0] == '(' and ch == ')':
-                        stack.pop()
-                    else:
-                        stack.append((ch, i))
+                    stack.append((ch, i))
 
-        for ch, i in stack:
-            res[i] = ""
+        bad_indices = set([i for ch, i in stack])
 
-        return "".join(res)
+        return ''.join([ch for i, ch in enumerate(s) if i not in bad_indices])
