@@ -15,16 +15,14 @@ class Solution:
 
         d = {node: Node(node.val)}
         q = deque([node])
-        seen = {node}
 
         while q:
             curr = q.popleft()
 
             for neig in curr.neighbors:
-                if neig not in seen:
+                if neig not in d:
                     d[neig] = Node(neig.val)
                     q.append(neig)
-                    seen.add(neig)
 
                 d[curr].neighbors.append(d[neig])
 
