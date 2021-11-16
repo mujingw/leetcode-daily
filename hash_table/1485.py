@@ -6,6 +6,7 @@ class Node:
         self.right = right
         self.random = random
 
+
 # Definition for NodeCopy.
 class NodeCopy:
     def __init__(self, val=0, left=None, right=None, random=None):
