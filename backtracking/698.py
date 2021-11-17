@@ -4,37 +4,29 @@ from typing import List
 class Solution:
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
         total = sum(nums)
+        self.T = total // k
 
         if total % k != 0:
             return False
 
-        self.N = len(nums)
-        self.k = k
-        self.nums = sorted(nums, reverse=True)
-        self.used = [False] * self.N
-        self.target = total // k
+        return self.backtrack(0, self.T, sorted(nums, reverse=True), k, [False] * len(nums))
 
-        return self.backtrack(total // k, 0, 0)
-
-    def backtrack(self, t, start_at, count):
-        if count == self.k:
+    def backtrack(self, start, target, nums, remaining, used):
+        if remaining == 1:
             return True
 
-        if t == 0:
-            return self.backtrack(self.target, 0, count + 1)
+        if target == 0:
+            return self.backtrack(0, self.T, nums, remaining - 1, used)
 
-        last_failed_num = -1
-
-        for i in range(start_at, self.N):
-            if self.used[i] or self.nums[i] > t or self.nums[i] == last_failed_num:
+        for i in range(start, len(nums)):
+            if used[i] or target < nums[i]:
                 continue
 
-            self.used[i] = True
+            used[i] = True
 
-            if self.backtrack(t - self.nums[i], i + 1, count):
+            if self.backtrack(i + 1, target - nums[i], nums, remaining, used):
                 return True
 
-            self.used[i] = False
-            last_failed_num = self.nums[i]
+            used[i] = False
 
         return False
