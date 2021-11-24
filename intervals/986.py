@@ -3,28 +3,24 @@ from typing import List
 
 
 class Solution:
-    def intervalIntersection(self, first: List[List[int]], second: List[List[int]]) -> List[List[int]]:
-        if not first or not second:
-            return []
-
+    def intervalIntersection(self, l1: List[List[int]], l2: List[List[int]]) -> List[List[int]]:
         d = defaultdict(int)
-        total = 0
-        curr_start = None
         res = []
+        agg = 0
 
-        for s, e in first + second:
-            d[s] += 1
-            d[e] -= 1
+        for a, b in l1 + l2:
+            d[a] += 1
+            d[b] -= 1
 
-        for p in sorted(d.keys()):
-            total += d[p]
+        for x in sorted(d.keys()):
+            prev = agg
+            agg += d[x]
 
-            if d[p] == 0:
-                res.append([p, p])
-            elif curr_start is None and total == 2:
-                curr_start = p
-            elif curr_start is not None and total < 2:
-                res.append([curr_start, p])
-                curr_start = None
+            if prev < 2 and agg == 2:
+                res.append([x, x])
+            elif prev == 2 and agg < 2:
+                res[-1][-1] = x
+            elif prev == 1 and agg == 1:
+                res.append([x, x])
 
         return res
