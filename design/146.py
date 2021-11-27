@@ -4,8 +4,7 @@ from collections import OrderedDict
 class LRUCache(OrderedDict):
 
     def __init__(self, capacity: int):
-        super().__init__()
-        self.capacity = capacity
+        self.k = capacity
 
     def get(self, key: int) -> int:
         if key in self:
@@ -16,12 +15,10 @@ class LRUCache(OrderedDict):
             return -1
 
     def put(self, key: int, value: int) -> None:
-        if key in self:
-            self.move_to_end(key)
-
         self[key] = value
+        self.move_to_end(key)
 
-        if len(self) > self.capacity:
+        if len(self) > self.k:
             self.popitem(last=False)
 
 # Your LRUCache object will be instantiated and called as such:
