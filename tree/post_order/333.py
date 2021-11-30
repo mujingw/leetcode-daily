@@ -1,3 +1,6 @@
+from typing import Optional
+
+
 # Definition for a binary tree node.
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -7,7 +10,7 @@ class TreeNode:
 
 
 class Solution:
-    def largestBSTSubtree(self, root: TreeNode) -> int:
+    def largestBSTSubtree(self, root: Optional[TreeNode]) -> int:
         mi, mx, count = self.dfs(root)
 
         return count
