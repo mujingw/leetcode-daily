@@ -5,8 +5,9 @@ from typing import List
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
         g = self.build_graph(flights)
-        seen = defaultdict(lambda: float('inf'))
         q = deque([(src, -1, 0)])
+        seen = defaultdict(lambda: float('inf'))
+        seen[src] = 0
 
         while q:
             city, stops, cost = q.popleft()
