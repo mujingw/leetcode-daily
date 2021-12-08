@@ -1,15 +1,16 @@
-from collections import deque
+from collections import deque, defaultdict
 from typing import List
 
 
 class Solution:
     def shortestDistance(self, maze: List[List[int]], start: List[int], dest: List[int]) -> int:
-        sx, sy = start[0], start[1]
-        ex, ey = dest[0], dest[1]
-        q = deque([(sx, sy, 0)])
-        seen = {(sx, sy): 0}
         DIR = ((0, 1), (1, 0), (-1, 0), (0, -1))
         R, C = len(maze), len(maze[0])
+        sx, sy = start
+        ex, ey = dest
+        q = deque([(sx, sy, 0)])
+        seen = defaultdict(lambda: float('inf'))
+        seen[(sx, sy)] = 0
 
         while q:
             cx, cy, steps = q.popleft()
@@ -22,7 +23,7 @@ class Solution:
                     ny += dy
                     ns += 1
 
-                if (nx, ny) not in seen or ns < seen[(nx, ny)]:
+                if ns < seen[(nx, ny)]:
                     seen[(nx, ny)] = ns
                     q.append((nx, ny, ns))
 
