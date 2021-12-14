@@ -1,44 +1,39 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 from typing import List
 
 
 class Solution:
-    def findOrder(self, N: int, prerequisites: List[List[int]]) -> List[int]:
-        def dfs(res, curr, g, visited, visiting):
-            if curr in visiting:
-                return False
+    def findOrder(self, N: int, pre: List[List[int]]) -> List[int]:
+        self.visited, self.visiting = set(), set()
+        self.g = self.build_graph(pre)
+        self.res = deque([])
 
-            if curr in visited:
-                return True
-
-            visiting.add(curr)
-
-            for neig in g[curr]:
-                if not dfs(res, neig, g, visited, visiting):
-                    return False
-
-            visiting.remove(curr)
-            visited.add(curr)
-            res.append(curr)
-
-            return True
-
-        g = defaultdict(set)
-        res = []
-
-        for course, pre in prerequisites:
-            g[pre].add(course)
-
-        visited, visiting = set(), set()
-
-        for course in list(g.keys()):
-            if not dfs(res, course, g, visited, visiting):
+        for course in range(N):
+            if not self.dfs(course):
                 return []
 
-        s = set(res)
+        return list(self.res)
 
-        for i in range(N):
-            if i not in s:
-                res.append(i)
+    def build_graph(self, pre):
+        g = defaultdict(set)
 
-        return res[::-1]
+        for course, prereq in pre:
+            g[prereq].add(course)
+
+        return g
+
+    def dfs(self, node):
+        if node in self.visited:
+            return True
+
+        if node in self.visiting:
+            return False
+
+        self.visiting.add(node)
+        ok = all(self.dfs(ng) for ng in self.g[node])
+        self.visiting.remove(node)
+        self.visited.add(node)
+
+        self.res.appendleft(node)
+
+        return ok
