@@ -12,16 +12,16 @@ class Solution:
         leaves = [i for i in range(n) if indegree[i] == 1]
 
         while n > 2:
+            n -= len(leaves)
             new_leaves = []
 
-            for node in leaves:
-                for ng in g[node]:
+            for leaf in leaves:
+                for ng in g[leaf]:
                     indegree[ng] -= 1
 
                     if indegree[ng] == 1:
                         new_leaves.append(ng)
 
-            n -= len(leaves)
             leaves = new_leaves[:]
 
         return leaves
