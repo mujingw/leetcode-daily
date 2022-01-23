@@ -30,6 +30,7 @@ class Solution:
 
                 if is_valid(curr):
                     valid_s.append(curr)
+                    continue
 
                 for i in range(len(curr)):
                     next_s = curr[:i] + curr[i + 1:]
