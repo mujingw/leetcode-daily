@@ -6,9 +6,9 @@ class Solution:
         N = len(nums)
         dp = [1] * N
 
-        for end in range(1, N):
-            for start in range(end):
-                if nums[start] < nums[end]:
-                    dp[end] = max(dp[end], dp[start] + 1)
+        for end in range(N):
+            for sub_seq_end in range(end):
+                if nums[sub_seq_end] < nums[end]:
+                    dp[end] = max(dp[end], dp[sub_seq_end] + 1)
 
         return max(dp)
