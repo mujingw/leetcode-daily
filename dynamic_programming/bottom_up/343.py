@@ -1,7 +1,6 @@
 class Solution:
     def integerBreak(self, n: int) -> int:
         dp = [i for i in range(n + 1)]
-        dp[1] = 1
         dp[n] = 0
 
         for i in range(2, n + 1):
