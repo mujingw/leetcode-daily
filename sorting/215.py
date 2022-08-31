@@ -3,17 +3,17 @@ from typing import List
 
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
-        return self.kth_smallest(nums, len(nums) - k)
+        return self.kth_smallest(nums, 0, len(nums) - 1, len(nums) - k)
 
-    def kth_smallest(self, nums, k):
-        p = self.partition(nums, 0, len(nums) - 1)
+    def kth_smallest(self, nums, start, end, k):
+        p = self.partition(nums, start, end)
 
         if p == k:
             return nums[p]
         elif p < k:
-            return self.kth_smallest(nums[p + 1:], k - p - 1)
+            return self.kth_smallest(nums, p + 1, end, k)
         else:
-            return self.kth_smallest(nums[:p], k)
+            return self.kth_smallest(nums, start, p - 1, k)
 
     def partition(self, nums, low, high):
         pivot = nums[low]
