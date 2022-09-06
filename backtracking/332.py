@@ -5,9 +5,10 @@ from typing import List
 
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        START = "JFK"
         res = []
         g = self.build_graph(tickets)
-        self.backtrack(res, ["JFK"], "JFK", g, len(tickets) + 1)
+        self.backtrack(res, [START], START, g, len(tickets) + 1)
 
         return res
 
