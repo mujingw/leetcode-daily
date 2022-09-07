@@ -4,15 +4,17 @@ from typing import List
 
 class Solution:
     def hasPath(self, maze: List[List[int]], start: List[int], destination: List[int]) -> bool:
-        q = deque([(start[0], start[1])])
-        seen = {(start[0], start[1])}
         DIR = ((0, 1), (0, -1), (-1, 0), (1, 0))
         R, C = len(maze), len(maze[0])
+        sx, sy = start
+        q = deque([(sx, sy)])
+        seen = {sx, sy}
+        gx, gy = destination
 
         while q:
             cx, cy = q.popleft()
 
-            if cx == destination[0] and cy == destination[1]:
+            if cx == gx and cy == gy:
                 return True
 
             for dx, dy in DIR:
