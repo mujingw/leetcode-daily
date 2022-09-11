@@ -1,26 +1,26 @@
-from collections import defaultdict
 from typing import List
 
 
 class Solution:
-    def intervalIntersection(self, l1: List[List[int]], l2: List[List[int]]) -> List[List[int]]:
-        d = defaultdict(int)
-        res = []
+    def intervalIntersection(self, first: List[List[int]], second: List[List[int]]) -> List[List[int]]:
+        points = []
         agg = 0
+        res = []
 
-        for a, b in l1 + l2:
-            d[a] += 1
-            d[b] -= 1
+        for a, b in first + second:
+            points.append((a, 0))
+            points.append((b, 1))
 
-        for x in sorted(d.keys()):
-            prev = agg
-            agg += d[x]
+        for x, mark in sorted(points):
+            if mark == 0:
+                agg += 1
 
-            if prev < 2 and agg == 2:
+            if mark == 1:
+                agg -= 1
+
+            if agg > 1:
                 res.append([x, x])
-            elif prev == 2 and agg < 2:
+            elif agg == 1 and mark == 1:
                 res[-1][-1] = x
-            elif prev == 1 and agg == 1:
-                res.append([x, x])
 
         return res
