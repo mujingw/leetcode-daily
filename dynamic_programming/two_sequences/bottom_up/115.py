@@ -1,16 +1,16 @@
 class Solution:
     def numDistinct(self, s: str, t: str) -> int:
-        R, C = len(t), len(s)
-        dp = [[0 for c in range(C + 1)] for r in range(R + 1)]
+        M, N = len(s), len(t)
+        dp = [[0 for _ in range(N + 1)] for _ in range(M + 1)]
 
-        for i in range(R):
-            for j in range(C):
-                if i == 0:
-                    dp[i][j] = 1
+        for i in range(M + 1):
+            dp[i][0] = 1
 
-                if t[i] == s[j]:
-                    dp[i + 1][j + 1] = dp[i][j] + dp[i + 1][j]
-                else:
-                    dp[i + 1][j + 1] = dp[i + 1][j]
+        for i in range(1, M + 1):
+            for j in range(1, N + 1):
+                dp[i][j] = dp[i - 1][j]
+
+                if s[i - 1] == t[j - 1]:
+                    dp[i][j] += dp[i - 1][j - 1]
 
         return dp[-1][-1]
