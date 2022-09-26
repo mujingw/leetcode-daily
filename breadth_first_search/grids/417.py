@@ -4,27 +4,16 @@ from typing import List
 
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        if not heights:
-            return []
-
         R, C = len(heights), len(heights[0])
-        q_pac, q_atl = deque(), deque()
-
-        for c in range(C):
-            q_pac.append((0, c))
-            q_atl.append((R - 1, c))
-
-        for r in range(R):
-            q_pac.append((r, 0))
-            q_atl.append((r, C - 1))
-
-        good_pac = self.bfs(q_pac, R, C, heights)
-        good_atl = self.bfs(q_atl, R, C, heights)
+        DIR = ((1, 0), (0, 1), (0, -1), (-1, 0))
+        q_pac = deque([(r, 0) for r in range(R)] + [(0, c) for c in range(1, C)])
+        q_atl = deque([(r, C-1) for r in range(R)] + [(R-1, c) for c in range(C-1)])
+        good_pac = self.bfs(q_pac, R, C, DIR, heights)
+        good_atl = self.bfs(q_atl, R, C, DIR, heights)
 
         return list(good_pac.intersection(good_atl))
 
-    def bfs(self, q, R, C, heights):
-        DIR = ((1, 0), (0, 1), (0, -1), (-1, 0))
+    def bfs(self, q, R, C, DIR, heights):
         seen = set(list(q))
 
         while q:
