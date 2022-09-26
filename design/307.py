@@ -39,4 +39,4 @@ class NumArray:
 # Your NumArray object will be instantiated and called as such:
 # obj = NumArray(nums)
 # obj.update(index,val)
-# param_2 = obj.sumRange(left,right)
+# param_2 = obj.sumRange(left, right)
