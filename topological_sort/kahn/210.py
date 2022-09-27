@@ -3,40 +3,36 @@ from typing import List
 
 
 class Solution:
-    def findOrder(self, n: int, prereqs: List[List[int]]) -> List[int]:
-        g = self.build_graph(prereqs)
-        in_degrees = self.get_indegrees(prereqs)
-        q = deque([x for x in range(n) if in_degrees[x] == 0])
+    def findOrder(self, n: int, pre: List[List[int]]) -> List[int]:
         res = []
-        courses_taken = 0
+        g = self.build_graph(pre)
+        indeg = self.get_indeg(pre)
+        q = deque([x for x in range(n) if indeg[x] == 0])
 
         while q:
-            for _ in range(len(q)):
-                curr = q.popleft()
+            curr = q.popleft()
+            res.append(curr)
 
-                for neig in g[curr]:
-                    in_degrees[neig] -= 1
+            for neig in g[curr]:
+                indeg[neig] -= 1
 
-                    if in_degrees[neig] == 0:
-                        q.append(neig)
+                if indeg[neig] == 0:
+                    q.append(neig)
 
-                courses_taken += 1
-                res.append(curr)
+        return res if len(res) == n else []
 
-        return res if courses_taken == n else []
+    def build_graph(self, pre):
+        g = defaultdict(list)
 
-    def build_graph(self, prereqs):
-        g = defaultdict(set)
-
-        for course, prereq in prereqs:
-            g[prereq].add(course)
+        for second, first in pre:
+            g[first].append(second)
 
         return g
 
-    def get_indegrees(self, prereqs):
-        in_degrees = defaultdict(int)
+    def get_indeg(self, pre):
+        indeg = defaultdict(int)
 
-        for course, prereq in prereqs:
-            in_degrees[course] += 1
+        for second, first in pre:
+            indeg[second] += 1
 
-        return in_degrees
+        return indeg
