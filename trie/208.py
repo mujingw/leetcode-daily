@@ -22,21 +22,21 @@ class Trie:
         curr.is_word = True
 
     def search(self, word: str) -> bool:
-        return self._search(word, True)
+        return self._find(word, True)
 
     def startsWith(self, prefix: str) -> bool:
-        return self._search(prefix, False)
+        return self._find(prefix, False)
 
-    def _search(self, target, is_full_word) -> bool:
+    def _find(self, target, must_be_word):
         curr = self.root
 
         for ch in target:
-            if ch in curr.children:
-                curr = curr.children[ch]
-            else:
+            if ch not in curr.children:
                 return False
 
-        return curr.is_word if is_full_word else True
+            curr = curr.children[ch]
+
+        return curr.is_word if must_be_word else True
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
