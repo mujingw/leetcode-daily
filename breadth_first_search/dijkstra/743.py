@@ -4,25 +4,25 @@ from typing import List
 
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
+        g = self.build_graph(times)
         q = deque([(k, 0)])
         seen = defaultdict(lambda: float('inf'))
         seen[k] = 0
-        g = self.build_graph(times)
 
         while q:
-            curr, cost = q.popleft()
+            curr, dist = q.popleft()
 
-            for nx, weight in g[curr]:
-                if cost + weight < seen[nx]:
-                    seen[nx] = cost + weight
-                    q.append((nx, cost + weight))
+            for neig, weight in g[curr]:
+                if seen[neig] > dist + weight:
+                    seen[neig] = dist + weight
+                    q.append((neig, dist + weight))
 
         return max(seen.values()) if len(seen) == n else -1
 
     def build_graph(self, times):
-        g = defaultdict(set)
+        g = defaultdict(list)
 
         for u, v, w in times:
-            g[u].add((v, w))
+            g[u].append((v, w))
 
         return g
