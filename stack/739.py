@@ -2,15 +2,14 @@ from typing import List
 
 
 class Solution:
-    def dailyTemperatures(self, T: List[int]) -> List[int]:
-        res = [0] * len(T)
-        s = []
+    def dailyTemperatures(self, tprts: List[int]) -> List[int]:
+        stack, res = [], [0 for _ in range(len(tprts))]
 
-        for i, t in enumerate(T):
-            while s and s[-1][0] < t:
-                temperature, idx = s.pop()
-                res[idx] = i - idx
+        for i, t in enumerate(tprts):
+            while stack and tprts[stack[-1]] < t:
+                res[stack[-1]] = i - stack[-1]
+                stack.pop()
 
-            s.append((t, i))
+            stack.append(i)
 
         return res
