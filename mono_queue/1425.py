@@ -17,21 +17,20 @@ class MonoQueue:
             self.q.popleft()
 
     def mx(self):
-        return self.q[0]
+        return self.q[0] if self.q else 0
 
 
 class Solution:
     def constrainedSubsetSum(self, nums: List[int], k: int) -> int:
-        dp = [nums[0]]
+        dp = []
         window = MonoQueue()
-        window.push(nums[0])
 
-        for i, num in enumerate(nums[1:], 1):
+        for i, v in enumerate(nums):
             if i > k:
                 window.pop(dp[i - k - 1])
 
-            temp = max(num, window.mx() + num)
-            dp.append(temp)
-            window.push(temp)
+            new_max = max(window.mx() + v, v)
+            dp.append(new_max)
+            window.push(new_max)
 
         return max(dp)
