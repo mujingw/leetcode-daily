@@ -3,18 +3,23 @@ from typing import List
 
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        def dfs(res, curr, l, r, n):
-            if l > r or l < 0:
-                return
-
-            if len(curr) == 2 * n:
-                res.append(curr)
-                return
-
-            dfs(res, curr + "(", l - 1, r, n)
-            dfs(res, curr + ")", l, r - 1, n)
-
         res = []
-        dfs(res, "", n, n, n)
+        self.backtrack(res, [], n, n)
 
         return res
+
+    def backtrack(self, res, curr, left, right):
+        if left == 0 and right == 0:
+            res.append(''.join(curr))
+            return
+
+        if right < left or left < 0 or right < 0:
+            return
+
+        curr.append('(')
+        self.backtrack(res, curr, left - 1, right)
+        curr.pop()
+
+        curr.append(')')
+        self.backtrack(res, curr, left, right - 1)
+        curr.pop()
