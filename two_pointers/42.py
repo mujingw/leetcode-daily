@@ -2,25 +2,20 @@ from typing import List
 
 
 class Solution:
-    def trap(self, heights: List[int]) -> int:
+    def trap(self, height: List[int]) -> int:
         res = 0
-        l, r = 0, len(heights) - 1
-        lmax, rmax = heights[l], heights[r]
+        lmax, rmax = 0, 0
+        l, r = 0, len(height) - 1
 
         while l < r:
-            if heights[l] < heights[r]:
-                if heights[l] >= lmax:
-                    lmax = heights[l]
-                else:
-                    res += (lmax - heights[l])
+            lmax = max(lmax, height[l])
+            rmax = max(rmax, height[r])
 
+            if lmax < rmax:
+                res += (lmax - height[l])
                 l += 1
             else:
-                if heights[r] >= rmax:
-                    rmax = heights[r]
-                else:
-                    res += (rmax - heights[r])
-
+                res += (rmax - height[r])
                 r -= 1
 
         return res
