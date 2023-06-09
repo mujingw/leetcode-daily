@@ -1,27 +1,26 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        s = s + '+'
-        preceding_op, num = '+', 0
-        stack = []
+        stack, num, pre_op = [], 0, '+'
 
-        for ch in s:
+        for ch in s + '+':
+            if ch.isspace():
+                continue
+
             if ch.isdigit():
                 num = num * 10 + ord(ch) - ord('0')
-            elif ch.isspace():
-                continue
             else:
-                if preceding_op == '+':
+                if pre_op == '+':
                     stack.append(num)
-                elif preceding_op == '-':
+                elif pre_op == '-':
                     stack.append(-num)
-                elif preceding_op == '*':
-                    last_num = stack.pop()
-                    stack.append(last_num * num)
-                elif preceding_op == '/':
-                    last_num = stack.pop()
-                    stack.append(int(last_num / num))
+                else:
+                    x = stack.pop()
 
-                preceding_op = ch
-                num = 0
+                    if pre_op == '*':
+                        stack.append(x * num)
+                    elif pre_op == '/':
+                        stack.append(int(x / num))
+
+                num, pre_op = 0, ch
 
         return sum(stack)
