@@ -1,24 +1,26 @@
-from functools import lru_cache
 from typing import List
 
 
 class Solution:
-    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
-        @lru_cache(None)
-        def helper(s):
-            res = []
+    def wordBreak(self, s: str, wd: List[str]) -> List[str]:
+        return self.helper(s, set(wd), {})
 
-            if s in w_dict:
-                res.append(s)
+    def helper(self, s, wd, memo):
+        if s in memo:
+            return memo[s]
 
-            for i in range(1, len(s)):
-                right = s[i:]
+        res = []
 
-                if right in w_dict:
-                    res.extend([left + " " + right for left in helper(s[0:i])])
+        if s in wd:
+            res.append(s)
 
-            return res
+        for i in range(1, len(s)):
+            left = s[:i]
 
-        w_dict = set(wordDict)
+            if left in wd:
+                for right in self.helper(s[i:], wd, memo):
+                    res.append(left + " " + right)
 
-        return helper(s)
+        memo[s] = res
+
+        return res
