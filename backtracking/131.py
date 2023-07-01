@@ -3,19 +3,20 @@ from typing import List
 
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
-        def dfs(res, curr, s):
-            if s:
-                for i in range(1, len(s) + 1):
-                    prefix = s[:i]
-
-                    if prefix == prefix[::-1]:
-                        curr.append(prefix)
-                        dfs(res, curr, s[i:])
-                        curr.pop()
-            else:
-                res.append(curr[:])
-
         res = []
-        dfs(res, [], s)
+        self.backtrack(res, [], s, 0)
 
         return res
+
+    def backtrack(self, res, curr, s, pos):
+        if pos == len(s):
+            res.append(curr[:])
+            return
+
+        for i in range(pos, len(s)):
+            candidate = s[pos:i+1]
+
+            if candidate == candidate[::-1]:
+                curr.append(candidate)
+                self.backtrack(res, curr, s, i+1)
+                curr.pop()
