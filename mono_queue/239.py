@@ -2,34 +2,20 @@ from collections import deque
 from typing import List
 
 
-class MonoQueue:
-    def __init__(self):
-        self.q = deque()
-
-    def push(self, x):
-        while self.q and self.q[-1] < x:
-            self.q.pop()
-
-        self.q.append(x)
-
-    def pop(self, x):
-        if x == self.q[0]:
-            self.q.popleft()
-
-    def mx(self):
-        return self.q[0]
-
-
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        window = MonoQueue()
-        res = []
+        q, res = deque(), []
 
-        for i, num in enumerate(nums):
-            window.push(num)
+        for i, v in enumerate(nums):
+            while q and nums[q[-1]] < v:
+                q.pop()
+
+            q.append(i)
+
+            if i - q[0] >= k:
+                q.popleft()
 
             if i >= k - 1:
-                res.append(window.mx())
-                window.pop(nums[i - k + 1])
+                res.append(nums[q[0]])
 
         return res
