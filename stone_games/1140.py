@@ -18,12 +18,9 @@ class Solution:
 
         diff = float('-inf')
 
-        for i in range(2 * M):
-            if pos + i + 1 > self.N:
-                break
-
+        for x in range(1, min(2 * M + 1, self.N - pos + 1)):
             diff = max(
                 diff,
-                self.presum[pos + i + 1] - self.presum[pos] - self.max_diff(pos + i + 1, max(M, i + 1)))
+                self.presum[pos + x] - self.presum[pos] - self.max_diff(pos + x, max(M, x)))
 
         return diff
