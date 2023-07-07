@@ -1,37 +1,22 @@
 from collections import deque
+from typing import List
 
 
-class MonoQueue:
-    def __init__(self):
-        self.q = deque()
+class Solution:
+    def maxResult(self, nums: List[int], k: int) -> int:
+        q = deque([0])
+        res = [0] * len(nums)
 
-    def push(self, x):
-        while self.q and self.q[-1] < x:
-            self.q.pop()
+        for i, v in enumerate(nums):
+            while q and i - q[0] > k:
+                q.popleft()
 
-        self.q.append(x)
+            if q:
+                res[i] = v + res[q[0]]
 
-    def pop(self, x):
-        if self.q and x == self.q[0]:
-            self.q.popleft()
+            while q and res[q[-1]] < res[i]:
+                q.pop()
 
-    def mx(self):
-        return self.q[0]
+            q.append(i)
 
-
-class Solution(object):
-    def maxResult(self, nums, k):
-        mono_q = MonoQueue()
-        N = len(nums)
-        dp = [0] * N
-        dp[0] = nums[0]
-        mono_q.push(dp[0])
-
-        for i, v in enumerate(nums[1:], 1):
-            if i - k - 1 >= 0:
-                mono_q.pop(dp[i - k - 1])
-
-            dp[i] = mono_q.mx() + v
-            mono_q.push(dp[i])
-
-        return dp[-1]
+        return res[-1]
