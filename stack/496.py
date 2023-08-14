@@ -4,12 +4,14 @@ from typing import List
 
 class Solution:
     def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
-        res, stack, mapping = [], [], defaultdict(lambda: -1)
+        d = defaultdict(lambda: -1)
+        stack = []
 
-        for x in nums2:
-            while stack and x > stack[-1]:
-                mapping[stack.pop()] = x
+        for i, v in enumerate(nums2):
+            while stack and nums2[stack[-1]] < v:
+                k = nums2[stack.pop()]
+                d[k] = v
 
-            stack.append(x)
+            stack.append(i)
 
-        return [mapping[x] for x in nums1]
+        return [d[k] for k in nums1]
