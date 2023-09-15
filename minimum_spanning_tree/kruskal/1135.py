@@ -1,4 +1,4 @@
-from heapq import heappop, heappush
+from heapq import heappop, heapify
 from typing import List
 
 
@@ -51,13 +51,10 @@ class Edge:
 
 class Solution:
     def minimumCost(self, N: int, connections: List[List[int]]) -> int:
-        edge_count = 0
-        cost = 0
+        h = [Edge(u, v, w) for u, v, w in connections]
+        heapify(h)
+        edge_count, cost = 0, 0
         uf = UF()
-        h = []
-
-        for u, v, w in connections:
-            heappush(h, Edge(u, v, w))
 
         while edge_count < N - 1 and h:
             e = heappop(h)
