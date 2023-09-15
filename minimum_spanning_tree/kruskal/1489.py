@@ -6,26 +6,36 @@ class UF:
 
     def __init__(self):
         self.parent = {}
+        self.rank = {}
 
     def add(self, x):
         if x in self.parent:
             return
 
         self.parent[x] = x
+        self.rank[x] = 1
 
     def union(self, u, v):
-        root_u, root_v = self.find(u), self.find(v)
+        ru, rv = self.find(u), self.find(v)
 
-        if root_u == root_v:
+        if ru == rv:
             return
 
-        self.parent[root_u] = root_v
+        if self.rank[ru] < self.rank[rv]:
+            self.parent[ru] = rv
+        elif self.rank[rv] < self.rank[ru]:
+            self.parent[rv] = ru
+        else:
+            self.parent[ru] = rv
+            self.rank[rv] += 1
 
     def find(self, x):
         if self.parent[x] == x:
             return x
 
-        return self.find(self.parent[x])
+        self.parent[x] = self.find(self.parent[x])
+
+        return self.parent[x]
 
 
 class Edge:
@@ -39,38 +49,25 @@ class Edge:
         return self.w < other.w
 
 
-class Point:
-
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    def __eq__(self, other):
-        return other.x == self.x and other.y == self.y
-
-    def __hash__(self):
-        return hash((self.x, self.y))
-
-
 class Solution:
     def findCriticalAndPseudoCriticalEdges(self, n: int, edges: List[List[int]]) -> List[List[int]]:
         self.N = n
         all_edges = [Edge(u, v, w) for u, v, w in edges]
-        C, _ = self.build_mst(all_edges[:], 0, UF(), 0)
+        C = self.build_mst(all_edges[:], 0, UF(), 0)
         critical, pseudo = [], []
 
         for i, e in enumerate(all_edges):
             curr_edges = all_edges[:i] + all_edges[i + 1:]
-            cost, edge_count = self.build_mst(curr_edges[:], 0, UF(), 0)
+            cost = self.build_mst(curr_edges[:], 0, UF(), 0)
 
-            if cost > C or edge_count < n - 1:
+            if cost != C:
                 critical.append(i)
             else:
                 uf = UF()
                 uf.add(e.u)
                 uf.add(e.v)
                 uf.union(e.u, e.v)
-                new_cost, _ = self.build_mst(curr_edges[:], e.w, uf, 1)
+                new_cost = self.build_mst(curr_edges[:], e.w, uf, 1)
 
                 if new_cost == C:
                     pseudo.append(i)
@@ -96,4 +93,4 @@ class Solution:
             uf.union(u, v)
             edge_count += 1
 
-        return cost, edge_count
+        return cost
